@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">JobSearch_Test</string>
+    <string name="search">Поиск</string>
+    <string name="favorites">Избранное</string>
+    <string name="responses">Отклики</string>
+    <string name="messages">Сообщения</string>
+    <string name="profile">Профиль</string>
+    <string name="continueText">Продолжить</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="enterWithPassword">Войти с паролем</string>
+    <string name="job_search">Поиск работы</string>
+    <string name="send_code_to_email">Отправили код на</string>
+    <string name="write_code">Напишите его, чтобы подтвердить, что это вы, а не кто-то другой входит в личный кабинет</string>
+    <string name="employees_search">Поиск сотрудников</string>
+    <string name="i_am_looking_for_employees">Я ищу сотрудников</string>
+    <string name="baseAccess">Размещение вакансий и доступ к базе резюме</string>
+</resources>
