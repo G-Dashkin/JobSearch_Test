@@ -1,14 +1,15 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.devtools.ksp)
 }
 
 android {
     namespace = "com.example.data"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -24,20 +25,33 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-    buildFeatures {
-        viewBinding = true
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
 
+    implementation(project(":core:utils"))
+
+    implementation(project(":data_api"))
+    implementation(project(":domain_models"))
+    implementation(project(":core:ui"))
+
+    // di
+    implementation(libs.javax.inject)
+
+    // room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
+    implementation ("com.google.code.gson:gson:2.10.1")
 }

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.example.jobsearch_test.R
 import com.example.jobsearch_test.api.EntranceFeatureApi
+import com.example.jobsearch_test.api.MainFeatureApi
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.databinding.FragmentNavigatorBinding
 import com.example.jobsearch_test.di.DaggerProvider
@@ -34,12 +35,16 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
     @Inject
     lateinit var entranceFeatureApi: EntranceFeatureApi
 
+    @Inject
+    lateinit var mainFeatureApi: MainFeatureApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentNavigatorBinding.inflate(layoutInflater)
         DaggerProvider.appComponent.inject(this)
         navigatorLifecycle.onCreate(this)
-        router.navigateTo(fragment = entranceFeatureApi.openEntrance1())
+//        router.navigateTo(fragment = entranceFeatureApi.openEntrance1())
+        router.navigateTo(fragment = mainFeatureApi.open())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
