@@ -51,8 +51,9 @@ dependencies {
 
     implementation(project(":features:entrance"))
     implementation(project(":features:entrance_api"))
-    implementation(project(":features:main"))
-    implementation(project(":features:main_api"))
+
+    implementation(project(":features:home"))
+    implementation(project(":features:home_api"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

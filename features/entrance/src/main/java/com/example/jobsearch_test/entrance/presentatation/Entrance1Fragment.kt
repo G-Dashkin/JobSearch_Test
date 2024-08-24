@@ -51,8 +51,9 @@ class Entrance1Fragment: Fragment(R.layout.fragment_entrance_1)  {
 
         binding.continueBottom.setOnClickListener { entrance1ViewModel.continueButtonClicked() }
 
-        textInputListener()
+
         setState()
+        textInputListener()
     }
 
     private fun textInputListener() {
@@ -76,6 +77,7 @@ class Entrance1Fragment: Fragment(R.layout.fragment_entrance_1)  {
             }
         }
     }
+
 
     private fun emptyField() {
         binding.emailTextField.text?.clear()

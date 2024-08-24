@@ -14,4 +14,5 @@
     <string name="employees_search">Поиск сотрудников</string>
     <string name="i_am_looking_for_employees">Я ищу сотрудников</string>
     <string name="baseAccess">Размещение вакансий и доступ к базе резюме</string>
+    <string name="offerIcon">OfferIcon</string>
 </resources>

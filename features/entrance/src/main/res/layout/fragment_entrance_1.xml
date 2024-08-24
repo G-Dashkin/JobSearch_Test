@@ -1,120 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     android:paddingStart="@dimen/padding16"
-    android:paddingEnd="@dimen/padding16"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:paddingEnd="@dimen/padding16">
+
+    <TextView
+        android:id="@+id/toolbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:layout_marginTop="@dimen/margin20"
+        android:text="Вход в личный кабинет"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:background="@drawable/custom_block_border"
-        android:paddingStart="@dimen/padding16"
-        android:paddingEnd="@dimen/padding16"
-        android:paddingTop="@dimen/padding24"
-        android:paddingBottom="@dimen/padding24"
-        android:layout_marginBottom="@dimen/padding24">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/job_search"
-            android:paddingBottom="20dp"
-            style="@style/Title3"/>
-
-        <EditText
-            android:id="@+id/emailTextField"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/custom_form_border"
-            android:drawableLeft="@drawable/ic_responses"
-            android:drawablePadding="10dp"
-            android:textColorHint="@color/grey3"
-            android:textColor="@color/white"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:singleLine="true"
-            android:hint="Электронная почта или телефон"
-            style="@style/Title4"/>
-        
-        <TextView
-            android:id="@+id/errorEmailMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:textColor="@color/red"
-            android:textSize="13sp"
-            android:text="Вы ввели неверный e-mail"/>
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin20"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/continueBottom"
-                android:layout_width="167dp"
-                android:layout_height="50dp"
-                android:textColor="@color/text_button_color_one"
-                app:backgroundTint="@color/button_background_color_blue"
-                app:shapeAppearance="@style/shape8"
-                android:text="@string/continueText"
-                android:textAllCaps="false"
-                style="@style/ButtonText2"/>
+            android:layout_marginBottom="@dimen/padding24"
+            android:background="@drawable/custom_block_border"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/padding16"
+            android:paddingTop="@dimen/padding24"
+            android:paddingEnd="@dimen/padding16"
+            android:paddingBottom="@dimen/padding24">
 
             <TextView
+                style="@style/Title3"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|right"
-                android:layout_weight="1"
-                android:textColor="@color/blue"
-                android:text="@string/enterWithPassword"/>
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                android:text="@string/job_search"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/emailTextField"
+                style="@style/Title4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/custom_form_border"
+                android:drawableLeft="@drawable/ic_responses"
+                android:drawablePadding="10dp"
+                android:hint="Электронная почта или телефон"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey3" />
+
+            <TextView
+                android:id="@+id/errorEmailMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Вы ввели неверный e-mail"
+                android:textColor="@color/red"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin20"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/continueBottom"
+                    style="@style/ButtonText2"
+                    android:layout_width="167dp"
+                    android:layout_height="50dp"
+                    android:text="@string/continueText"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_button_color_one"
+                    app:backgroundTint="@color/button_background_color_blue"
+                    app:shapeAppearance="@style/shape8" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:text="@string/enterWithPassword"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/custom_block_border"
-        android:paddingStart="@dimen/padding16"
-        android:paddingEnd="@dimen/padding16"
-        android:paddingTop="@dimen/padding24"
-        android:paddingBottom="@dimen/padding24">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/employees_search"
-            android:paddingBottom="20dp"
-            style="@style/Title3"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/baseAccess"
-            android:paddingBottom="20dp"
-            style="@style/ButtonText2"/>
-
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:backgroundTint="@color/button_background_color_green_one"
-            app:shapeAppearance="@style/shape50"
-            android:text="@string/i_am_looking_for_employees"
-            android:textColor="@color/white"
-            android:textAllCaps="false"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_block_border"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/padding16"
+            android:paddingTop="@dimen/padding24"
+            android:paddingEnd="@dimen/padding16"
+            android:paddingBottom="@dimen/padding24">
+
+            <TextView
+                style="@style/Title3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                android:text="@string/employees_search"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/ButtonText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                android:text="@string/baseAccess"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/i_am_looking_for_employees"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/button_background_color_green_one"
+                app:shapeAppearance="@style/shape50" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

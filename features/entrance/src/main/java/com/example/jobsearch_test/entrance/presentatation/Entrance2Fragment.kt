@@ -12,7 +12,7 @@ import com.example.entrance.R
 import com.example.entrance.databinding.FragmentEntrance1Binding
 import com.example.entrance.databinding.FragmentEntrance2Binding
 import com.example.jobsearch_test.api.EntranceFeatureApi
-import com.example.jobsearch_test.api.MainFeatureApi
+import com.example.jobsearch_test.api.HomeFeatureApi
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.entrance.di.DaggerEntranceComponent
 import com.example.jobsearch_test.entrance.di.EntranceFeatureDepsProvider
@@ -41,7 +41,7 @@ class Entrance2Fragment: Fragment(R.layout.fragment_entrance_2) {
     lateinit var router: Router
 
     @Inject
-    lateinit var mainFeatureApi: MainFeatureApi
+    lateinit var homeFeatureApi: HomeFeatureApi
 
     private val entrance2ViewModel by viewModels<Entrance2ViewModel> {
         vmFactoryAssisted.create(arguments?.getString(EMAIL_EXTRA_PARAM))
@@ -182,6 +182,6 @@ class Entrance2Fragment: Fragment(R.layout.fragment_entrance_2) {
     }
 
     private fun showMainScreen(){
-        router.navigateTo(fragment = mainFeatureApi.open())
+        router.navigateTo(fragment = homeFeatureApi.open())
     }
 }

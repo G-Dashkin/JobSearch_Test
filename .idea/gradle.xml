@@ -20,8 +20,8 @@
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/entrance" />
             <option value="$PROJECT_DIR$/features/entrance_api" />
-            <option value="$PROJECT_DIR$/features/main" />
-            <option value="$PROJECT_DIR$/features/main_api" />
+            <option value="$PROJECT_DIR$/features/home" />
+            <option value="$PROJECT_DIR$/features/home_api" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

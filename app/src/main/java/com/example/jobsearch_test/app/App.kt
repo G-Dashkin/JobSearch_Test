@@ -5,7 +5,7 @@ import com.example.jobsearch_test.di.DaggerAppComponent
 import com.example.jobsearch_test.di.AppModule
 import com.example.jobsearch_test.di.DaggerProvider
 import com.example.jobsearch_test.entrance.di.EntranceFeatureDepsProvider
-import com.example.jobsearch_test.main.di.MainFeatureDepsProvider
+import com.example.jobsearch_test.home.di.HomeFeatureDepsProvider
 
 class App : Application() {
     override fun onCreate() {
@@ -21,7 +21,7 @@ class App : Application() {
             .build()
         DaggerProvider.appComponent = appComponent
         EntranceFeatureDepsProvider.deps = appComponent
-        MainFeatureDepsProvider.deps = appComponent
+        HomeFeatureDepsProvider.deps = appComponent
     }
     companion object {
         lateinit var instance: App private set

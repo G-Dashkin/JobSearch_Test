@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.example.jobsearch_test.R
 import com.example.jobsearch_test.api.EntranceFeatureApi
-import com.example.jobsearch_test.api.MainFeatureApi
+import com.example.jobsearch_test.api.HomeFeatureApi
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.databinding.FragmentNavigatorBinding
 import com.example.jobsearch_test.di.DaggerProvider
@@ -36,7 +36,7 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
     lateinit var entranceFeatureApi: EntranceFeatureApi
 
     @Inject
-    lateinit var mainFeatureApi: MainFeatureApi
+    lateinit var homeFeatureApi: HomeFeatureApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,47 +44,17 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
         DaggerProvider.appComponent.inject(this)
         navigatorLifecycle.onCreate(this)
 //        router.navigateTo(fragment = entranceFeatureApi.openEntrance1())
-        router.navigateTo(fragment = mainFeatureApi.open())
+        router.navigateTo(fragment = homeFeatureApi.open())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setToolbar()
-
-
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (childFragmentManager.backStackEntryCount > 0) {
-                    childFragmentManager.popBackStack()
-                } else {
-                    requireActivity().finish()
-                }
+                if (childFragmentManager.backStackEntryCount > 0) childFragmentManager.popBackStack()
+                else requireActivity().finish()
             }
-        }
-        )
-    }
-
-    private fun setToolbar(){
-        binding.toolbar.tooltipText = "Вход в личный кабинет"
-//        lifecycleScope.launch {
-//            binding.materialToolbar.visibility = View.GONE
-//            binding.materialToolbar.visibility = View.VISIBLE
-////            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-////            var currentFragmentName = childFragmentManager.getFragmentName()
-//            if (currentFragmentName !in START_SCREENS){
-//                binding.materialToolbar.visibility = View.VISIBLE
-//                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-//            } else {
-//                while (currentFragmentName in START_SCREENS) {
-//                    currentFragmentName = childFragmentManager.getFragmentName()
-//                    if (currentFragmentName !in START_SCREENS) {
-//                        binding.materialToolbar.visibility = View.VISIBLE
-//                        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-//                    }
-//                    delay(100)
-//                }
-//            }
-//        }
+        })
     }
 
     override fun onDestroy() {

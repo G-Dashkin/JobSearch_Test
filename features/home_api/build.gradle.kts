@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.entrance"
+    namespace = "com.example.home_api"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -31,27 +30,11 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
 
-    implementation(project(":core:navigation"))
-    implementation(project(":core:utils"))
-    implementation(project(":core:ui"))
-
-    implementation(project(":data_api"))
-    implementation(project(":domain_models"))
-
-    implementation(project(":features:entrance_api"))
-    implementation(project(":features:home_api"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.fragment.ktx)
     implementation(libs.material)
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
 }

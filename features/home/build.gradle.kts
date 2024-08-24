@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.entrance"
+    namespace = "com.example.home"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -45,13 +45,17 @@ dependencies {
     implementation(project(":data_api"))
     implementation(project(":domain_models"))
 
-    implementation(project(":features:entrance_api"))
     implementation(project(":features:home_api"))
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.material)
+
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 }
