@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.home.R
 import com.example.home.databinding.VacancyItemBinding
 import com.example.jobsearch_test.models.Vacancy
 import java.text.SimpleDateFormat
@@ -33,6 +34,10 @@ class VacanciesAdapter(
         fun bind(vacancy: Vacancy) {
 
             binding.lookingNumber.text = "Сейчас просматривает ${vacancy.lookingNumber} человек"
+            binding.favoriteIcon.setImageResource(
+                if (vacancy.isFavorite) com.example.ui.R.drawable.ic_favorites_select
+                else com.example.ui.R.drawable.ic_favorite
+            )
             binding.title.text = vacancy.title
 
             if (vacancy.salary.short.isNullOrEmpty()) binding.salary.visibility = View.GONE

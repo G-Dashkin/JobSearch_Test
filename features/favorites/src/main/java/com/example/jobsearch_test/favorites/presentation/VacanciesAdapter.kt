@@ -32,6 +32,10 @@ class VacanciesAdapter(
         fun bind(vacancy: Vacancy) {
 
             binding.lookingNumber.text = "Сейчас просматривает ${vacancy.lookingNumber} человек"
+            binding.favoriteIcon.setImageResource(
+                if (vacancy.isFavorite) com.example.ui.R.drawable.ic_favorites_select
+                else com.example.ui.R.drawable.ic_favorite
+            )
             binding.title.text = vacancy.title
 
             if (vacancy.salary.short.isNullOrEmpty()) binding.salary.visibility = View.GONE

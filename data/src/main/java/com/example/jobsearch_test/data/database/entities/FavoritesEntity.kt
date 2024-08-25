@@ -8,13 +8,10 @@ import androidx.room.PrimaryKey
 data class FavoritesEntity (
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String,
-    @ColumnInfo(name = "is_favorites")
-    val isFavorites: Boolean
+    val id: String
 ) {
     companion object {
         const val TABLE_NAME = "favorites"
         const val ID = "id"
-        const val IS_FAVORITES = "is_favorites"
     }
 }

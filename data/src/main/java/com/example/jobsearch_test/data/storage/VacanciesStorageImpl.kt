@@ -11,14 +11,15 @@ class VacanciesStorageImpl @Inject constructor(
 ): VacanciesStorage {
 
     override suspend fun selectFavorites(favoriteId: String) {
-        Log.d("MyLog", "Favorite Id in Storage: ${favoritesDao.getAllFavorites()}")
-        favoritesDao.insert(FavoritesEntity(id = favoriteId, isFavorites = true))
+        if (favoritesDao.getAllFavorites().contains(favoriteId)){
+            favoritesDao.delete(FavoritesEntity(id = favoriteId))
+        } else {
+            favoritesDao.insert(FavoritesEntity(id = favoriteId))
+        }
     }
 
     override suspend fun getFavorites(): List<String> {
-        favoritesDao.getAllFavorites()
-        Log.d("MyLog", "All Favorites in Storage: ${favoritesDao.getAllFavorites()}")
-        return listOf()
+        return favoritesDao.getAllFavorites()
     }
 
 }
