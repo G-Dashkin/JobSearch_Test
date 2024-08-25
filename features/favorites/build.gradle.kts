@@ -1,21 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.jobsearch_test"
+    namespace = "com.example.favorites"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.example.jobsearch_test"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -42,33 +39,23 @@ android {
 dependencies {
 
     implementation(project(":core:navigation"))
-    implementation(project(":core:ui"))
     implementation(project(":core:utils"))
+    implementation(project(":core:ui"))
 
-    implementation(project(":data"))
     implementation(project(":data_api"))
     implementation(project(":domain_models"))
 
-    implementation(project(":features:entrance"))
-    implementation(project(":features:entrance_api"))
-
-    implementation(project(":features:home"))
-    implementation(project(":features:home_api"))
-
-    implementation(project(":features:vacancy"))
-    implementation(project(":features:vacancy_api"))
-
-    implementation(project(":features:favorites"))
     implementation(project(":features:favorites_api"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.google.material)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.material)
+
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 

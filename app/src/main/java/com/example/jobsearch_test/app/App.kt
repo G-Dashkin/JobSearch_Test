@@ -5,6 +5,7 @@ import com.example.jobsearch_test.di.DaggerAppComponent
 import com.example.jobsearch_test.di.AppModule
 import com.example.jobsearch_test.di.DaggerProvider
 import com.example.jobsearch_test.entrance.di.EntranceFeatureDepsProvider
+import com.example.jobsearch_test.favorites.di.FavoritesFeatureDepsProvider
 import com.example.jobsearch_test.home.di.HomeFeatureDepsProvider
 import com.example.jobsearch_test.vacancy.di.VacancyFeatureDepsProvider
 
@@ -24,6 +25,7 @@ class App : Application() {
         EntranceFeatureDepsProvider.deps = appComponent
         HomeFeatureDepsProvider.deps = appComponent
         VacancyFeatureDepsProvider.deps = appComponent
+        FavoritesFeatureDepsProvider.deps = appComponent
     }
     companion object {
         lateinit var instance: App private set

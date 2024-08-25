@@ -2,6 +2,7 @@ package com.example.jobsearch_test.presentation.navigation
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +15,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.example.jobsearch_test.R
 import com.example.jobsearch_test.api.EntranceFeatureApi
+import com.example.jobsearch_test.api.FavoritesFeatureApi
 import com.example.jobsearch_test.api.HomeFeatureApi
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.databinding.FragmentNavigatorBinding
 import com.example.jobsearch_test.di.DaggerProvider
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.internal.NavigationMenu
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,6 +42,10 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
     @Inject
     lateinit var homeFeatureApi: HomeFeatureApi
 
+    @Inject
+    lateinit var favoritesFeatureApi: FavoritesFeatureApi
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentNavigatorBinding.inflate(layoutInflater)
@@ -45,6 +53,16 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
         navigatorLifecycle.onCreate(this)
 //        router.navigateTo(fragment = entranceFeatureApi.openEntrance1())
         router.navigateTo(fragment = homeFeatureApi.open())
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentNavigatorBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +73,20 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
                 else requireActivity().finish()
             }
         })
+
+        binding.bottomNavigation.setOnItemSelectedListener { item->
+            Log.d("MyLog", "dddd")
+            when(item.itemId) {
+                R.id.nav_search -> router.navigateTo(fragment = homeFeatureApi.open())
+                R.id.nav_favorites -> router.navigateTo(fragment = favoritesFeatureApi.open())
+                R.id.nav_responses -> {}
+                R.id.nav_messages -> {}
+                R.id.nav_profile -> {}
+            }
+            true
+        }
+
+
     }
 
     override fun onDestroy() {
