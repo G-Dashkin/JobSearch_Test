@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.jobsearch_test.models.Vacancy
 import com.example.jobsearch_test.vacancy.domain.usecases.GetVacancyUseCase
+import com.example.jobsearch_test.vacancy.domain.usecases.SelectFavoriteVacanciesUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 sealed class VacancyScreen {
     data object Loading : VacancyScreen()
     data class Loaded(val vacancy: Vacancy) : VacancyScreen()
-    data object Apply : VacancyScreen()
+    data class Apply(val vacancyTitle: String) : VacancyScreen()
     data object Empty : VacancyScreen()
     data object Error : VacancyScreen()
     data object Back : VacancyScreen()
@@ -24,7 +25,8 @@ sealed class VacancyScreen {
 
 class VacancyViewModel(
     val vacancyId: String,
-    private val getVacancyUseCase: GetVacancyUseCase
+    private val getVacancyUseCase: GetVacancyUseCase,
+    private val selectFavoriteVacanciesUseCase: SelectFavoriteVacanciesUseCase
 ): ViewModel() {
 
     private val _state = MutableLiveData<VacancyScreen>(VacancyScreen.Loading)
@@ -41,14 +43,20 @@ class VacancyViewModel(
         }
     }
 
-    fun applyButtonClicked() {
+    fun applyButtonClicked(vacancyTitle: String) {
         viewModelScope.launch {
-            _state.value = VacancyScreen.Apply
+            _state.value = VacancyScreen.Apply(vacancyTitle)
         }
     }
 
     fun arrowBackClicked() {
         _state.value = VacancyScreen.Back
+    }
+
+    fun selectFavoriteIcon(vacancyId: String) {
+        viewModelScope.launch {
+            selectFavoriteVacanciesUseCase.execute(vacancyId)
+        }
     }
 
 }
@@ -60,7 +68,8 @@ interface VacancyViewModelFactoryAssisted {
 
 class VacancyViewModelFactory @AssistedInject constructor(
     @Assisted private val vacancyId: String,
-    private val getVacancyUseCase: GetVacancyUseCase
+    private val getVacancyUseCase: GetVacancyUseCase,
+    private val selectFavoriteVacanciesUseCase: SelectFavoriteVacanciesUseCase
 ):  ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(
@@ -69,7 +78,8 @@ class VacancyViewModelFactory @AssistedInject constructor(
     ): T {
         return VacancyViewModel(
             vacancyId = vacancyId,
-            getVacancyUseCase = getVacancyUseCase
+            getVacancyUseCase = getVacancyUseCase,
+            selectFavoriteVacanciesUseCase = selectFavoriteVacanciesUseCase
         ) as T
     }
 }

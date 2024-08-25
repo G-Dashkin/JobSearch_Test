@@ -39,8 +39,12 @@ class VacanciesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getVacancy(vacancyId: String): Vacancy = getData()
-        .vacancies.filter { it.id == vacancyId }.first()
+    override suspend fun getVacancy(vacancyId: String): Vacancy {
+        val favoritesVacancies = vacanciesStorage.getFavorites()
+        val vacancy = getData().vacancies.filter { it.id == vacancyId }.first()
+        return if (favoritesVacancies.contains(vacancy.id)) vacancy.toDomain(true)
+        else vacancy
+    }
 
     override suspend fun getAllOffers(): List<Offer> = getData().offers
 

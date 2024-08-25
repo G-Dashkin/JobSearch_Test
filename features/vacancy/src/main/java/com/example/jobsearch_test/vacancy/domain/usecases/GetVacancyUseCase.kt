@@ -12,7 +12,6 @@ class GetVacancyUseCase @Inject constructor(
     private val repository: VacanciesRepository
 ): UseCaseWithParams<Vacancy, String> {
     override suspend fun execute(vacancyId: String): Vacancy {
-        return repository.getVacancy(vacancyId = vacancyId
-        )
+        return repository.getVacancy(vacancyId = vacancyId)
     }
 }

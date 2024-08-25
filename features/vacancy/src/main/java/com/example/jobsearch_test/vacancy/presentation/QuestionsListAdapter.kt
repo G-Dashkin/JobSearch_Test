@@ -5,38 +5,26 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import com.example.vacancy.R
 import com.example.vacancy.databinding.QuestionItemBinding
 
-class QuestionsListAdapter(private val context: Context, private val questions: List<String>) : BaseAdapter() {
+class QuestionsListAdapter(private val context: Context, private val questions: List<String>) :
+    ArrayAdapter<String>(context, 0, questions){
 
-    override fun getCount(): Int = questions.size
-
-    override fun getItem(position: Int): Any = questions[position]
-
-    override fun getItemId(position: Int): Long = position.toLong()
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var row = convertView
-        var holder: QuestionViewHolder? = null
-
-        if (row == null) {
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            row = inflater.inflate(R.layout.question_item, parent, false)
-            row.tag = QuestionViewHolder(binding = QuestionItemBinding.inflate(LayoutInflater.from(parent?.context), parent, false))
-        } else {
-            holder = row.tag as QuestionViewHolder
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        var view = convertView
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.question_item, parent, false)
         }
+        val item = questions[position]
+        val textView = view!!.findViewById<TextView>(R.id.question)
 
-//        Log.d("MyLog", questions.toString())
-        Log.d("MyLog", questions[position])
-
-        holder?.question?.text = questions[position]
-        return row!!
+        textView.text = item
+        return view
     }
 
-    private class QuestionViewHolder(private val binding: QuestionItemBinding) {
-        val question = binding.question
-    }
 }

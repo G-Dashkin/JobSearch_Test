@@ -69,7 +69,7 @@ class HomeViewModel(
         }
     }
 
-    fun selectFavoriteIcon(vacancyId: String){
+    fun selectFavoriteIcon(vacancyId: String) {
         viewModelScope.launch {
             selectFavoriteVacanciesUseCase.execute(vacancyId)
             _vacancyList.postValue(getVacanciesUseCase.execute())

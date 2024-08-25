@@ -49,11 +49,11 @@
             android:src="@drawable/ic_share"
             android:layout_marginEnd="@dimen/margin16"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/iconFavorite"
+            app:layout_constraintEnd_toStartOf="@+id/favoriteIcon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/iconFavorite"
+            android:id="@+id/favoriteIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_favorite"
@@ -63,12 +63,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin24"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,15 +113,51 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin24"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="@dimen/padding8"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_block_border_four">
+                    <TextView
+                        android:id="@+id/appliedNumber"
+                        android:text="147 человек уже откликнулись"
+                        style="@style/Text1"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_green_icon_person"/>
 
                 </LinearLayout>
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="@dimen/padding8"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_block_border_four">
+                    <TextView
+                        android:id="@+id/lookingNumber"
+                        android:text="2 человека сейчас смотрят"
+                        style="@style/Text1"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_green_icon_eye"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -154,8 +191,9 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginTop="@dimen/margin8"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/map"/>
 
                 <TextView
@@ -212,10 +250,14 @@
                 style="@style/Title4"
                 android:text="Он получит его с откликом на вакансию"/>
 
+
+
             <ListView
-                android:id="@+id/questions"
+                android:id="@+id/questionsList"
+                android:layout_marginTop="@dimen/margin16"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="fill_parent"
+                android:dividerHeight="8dp"/>
 
             <Button
                 android:id="@+id/applyButton"
@@ -224,6 +266,7 @@
                 android:layout_height="50dp"
                 android:text="Откликнуться"
                 android:textAllCaps="false"
+                android:layout_marginTop="@dimen/margin16"
                 android:textColor="@color/text_button_color_one"
                 app:backgroundTint="@color/button_background_color_green_one"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -231,5 +274,5 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:shapeAppearance="@style/shape8" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

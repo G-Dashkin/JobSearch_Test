@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.models.Vacancy
 import com.example.jobsearch_test.vacancy.di.DaggerVacancyComponent
@@ -64,7 +65,6 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         binding = FragmentVacancyBinding.bind(view)
 
         binding.arrowBack.setOnClickListener { vacancyViewModel.arrowBackClicked() }
-        binding.applyButton.setOnClickListener { vacancyViewModel.applyButtonClicked() }
         setState()
     }
 
@@ -76,7 +76,7 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
                 VacancyScreen.Empty -> {}
                 VacancyScreen.Error -> {}
                 VacancyScreen.Back -> showBackFragment()
-                VacancyScreen.Apply -> showApplyDialog()
+                is VacancyScreen.Apply -> showApplyDialog(vacancyTitle = it.vacancyTitle)
             }
         }
     }
@@ -89,14 +89,25 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         binding.experience.text = "Требуемый опыт ${vacancy.experience.previewText}"
         binding.schedules.text = vacancy.schedules.toString()
 
+        binding.appliedNumber.text = "${vacancy.appliedNumber} человек уже откликнулись"
+        binding.lookingNumber.text = "${vacancy.lookingNumber} человек сейчас смотрят"
+
+        binding.favoriteIcon.setImageResource(
+            if (vacancy.isFavorite) com.example.ui.R.drawable.ic_favorites_select
+            else com.example.ui.R.drawable.ic_favorite
+        )
+
         binding.company.text = vacancy.company
         binding.companyAddress.text = "${vacancy.address.town}, ${vacancy.address.street}, ${vacancy.address.house}"
         binding.description.text = vacancy.description
         binding.responsibilities.text = vacancy.responsibilities
-//        binding.questions.adapter = QuestionsListAdapter(requireContext(), vacancy.questions)
+        binding.favoriteIcon.setOnClickListener { changeIsFavoriteIcon(vacancy) }
+        binding.applyButton.setOnClickListener { vacancyViewModel.applyButtonClicked(vacancy.title) }
+        binding.questionsList.adapter = QuestionsListAdapter(requireContext(), vacancy.questions)
+        setListViewSettings()
     }
 
-    private fun showApplyDialog() {
+    private fun showApplyDialog(vacancyTitle: String) {
 
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -106,7 +117,8 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         bindingCustomDialog = CustomDialogBinding.inflate(inflater)
         dialog.setContentView(bindingCustomDialog.root)
         dialog.show()
-        bindingCustomDialog.title.text = "название вакансс"
+
+        bindingCustomDialog.title.text = vacancyTitle
         bindingCustomDialog.addCoverLetter.setOnClickListener {
             bindingCustomDialog.coverLetterField.visibility = View.VISIBLE
             bindingCustomDialog.addCoverLetter.visibility = View.GONE
@@ -114,8 +126,40 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         bindingCustomDialog.applyButton.setOnClickListener {
             dialog.dismiss()
         }
-
     }
+
+    private fun changeIsFavoriteIcon(vacancy: Vacancy) {
+        var isFavorite = vacancy.isFavorite
+        lifecycleScope.launch {
+            vacancyViewModel.selectFavoriteIcon(vacancyId = vacancy.id)
+            // вот это убрать...
+            delay(200)
+
+            parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
+            if (isFavorite) {
+                binding.favoriteIcon.setImageResource(com.example.ui.R.drawable.ic_favorite)
+                isFavorite = false
+            } else {
+                binding.favoriteIcon.setImageResource(com.example.ui.R.drawable.ic_favorites_select)
+                isFavorite = true
+            }
+        }
+    }
+    private fun setListViewSettings(){
+        var totalHeight = 0
+        for (i in 0 until binding.questionsList.adapter.count) {
+            val mView = binding.questionsList.adapter.getView(i, null, binding.questionsList)
+            mView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+            totalHeight += mView.measuredHeight
+        }
+
+        // Set the ListView height
+        val params = binding.questionsList.layoutParams
+        params.height = totalHeight + (binding.questionsList.dividerHeight * (binding.questionsList.adapter.count - 1))
+        binding.questionsList.layoutParams = params
+    }
+
     private fun showBackFragment(){
         router.back()
     }

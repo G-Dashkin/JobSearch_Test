@@ -71,9 +71,11 @@
         android:id="@+id/coverLetterField"
         android:layout_width="match_parent"
         android:layout_height="85dp"
+        android:paddingStart="@dimen/padding16"
+        android:paddingEnd="@dimen/padding16"
         android:hint="Ваше сопроводительное письмо"
         android:visibility="gone"
-        android:textColorHighlight="@color/grey3"
+        android:textColorHint="@color/grey3"
         style="@style/Text1"
         android:textColor="@color/white" />
 
