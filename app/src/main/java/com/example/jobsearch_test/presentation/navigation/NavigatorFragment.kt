@@ -2,17 +2,14 @@ package com.example.jobsearch_test.presentation.navigation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.example.jobsearch_test.R
 import com.example.jobsearch_test.api.EntranceFeatureApi
@@ -23,9 +20,6 @@ import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.databinding.FragmentNavigatorBinding
 import com.example.jobsearch_test.di.DaggerProvider
 import com.example.jobsearch_test.domain.usecases.GetFavoritesCountUseCase
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.internal.NavigationMenu
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -110,9 +104,9 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
                 when(item.itemId) {
                     R.id.nav_search -> router.navigateTo(fragment = homeFeatureApi.open())
                     R.id.nav_favorites -> router.navigateTo(fragment = favoritesFeatureApi.open())
-                    R.id.nav_responses -> {}
-                    R.id.nav_messages -> {}
-                    R.id.nav_profile -> {}
+                    R.id.nav_responses -> showBlankScreen()
+                    R.id.nav_messages -> showBlankScreen()
+                    R.id.nav_profile -> showBlankScreen()
                 }
                 true
             }
@@ -136,5 +130,9 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
                 badge.isVisible = false
             }
         }
+    }
+
+    private fun showBlankScreen() {
+        childFragmentManager.commit { replace(R.id.main_fragment_container, BlankScreenFragment()) }
     }
 }
