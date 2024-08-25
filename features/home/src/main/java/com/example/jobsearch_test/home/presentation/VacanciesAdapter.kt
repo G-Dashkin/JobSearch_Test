@@ -1,21 +1,21 @@
 package com.example.jobsearch_test.home.presentation
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.home.R
 import com.example.home.databinding.VacancyItemBinding
 import com.example.jobsearch_test.models.Vacancy
-import com.example.jobsearch_test.models.VacancyItem
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class VacanciesAdapter(
     private val itemVacancyClick: (String) -> Unit,
-    private val itemFavoriteClick: (String) -> Unit
+    private val itemFavoriteClick: (String) -> Unit,
+    private val context: Context
 ): ListAdapter<Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("ru"))
@@ -34,7 +34,8 @@ class VacanciesAdapter(
     inner class VacancyViewHolder(private val binding: VacancyItemBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(vacancy: Vacancy) {
 
-            binding.lookingNumber.text = "Сейчас просматривает ${vacancy.lookingNumber} человек"
+            binding.lookingNumber.text = "${context.getString(com.example.ui.R.string.now_looking)} " +
+                    "${vacancy.lookingNumber} ${context.getString(com.example.ui.R.string.people)}"
             binding.favoriteIcon.setImageResource(
                 if (vacancy.isFavorite) com.example.ui.R.drawable.ic_favorites_select
                 else com.example.ui.R.drawable.ic_favorite
@@ -47,7 +48,8 @@ class VacanciesAdapter(
             binding.company.text = vacancy.company
             binding.experience.text = vacancy.experience.previewText
             binding.publishedDate.text = vacancy.publishedDate
-            binding.publishedDate.text = "Опубликовано ${monthFormat.format(dateFormat.parse(vacancy.publishedDate))}"
+            binding.publishedDate.text = "${context.getString(com.example.ui.R.string.published)} " +
+                    "${monthFormat.format(dateFormat.parse(vacancy.publishedDate))}"
             binding.root.setOnClickListener { itemVacancyClick.invoke(vacancy.id) }
             binding.favoriteIcon.setOnClickListener { itemFavoriteClick.invoke(vacancy.id) }
         }

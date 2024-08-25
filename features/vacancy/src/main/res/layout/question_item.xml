@@ -13,7 +13,6 @@
         android:paddingBottom="@dimen/padding8"
         android:paddingStart="@dimen/padding16"
         android:paddingEnd="@dimen/padding16"
-        android:text="Где распологается место работы?"
         android:textColor="@color/white"
         style="@style/Title4" />
 

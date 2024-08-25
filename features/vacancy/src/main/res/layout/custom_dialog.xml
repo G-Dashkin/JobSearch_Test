@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/black"
-    android:minWidth="360dp"
-    android:minHeight="300dp"
+    android:minWidth="@dimen/width360"
+    android:minHeight="@dimen/height300"
     android:orientation="vertical">
 
     <View
-        android:layout_width="38dp"
-        android:layout_height="5dp"
+        android:layout_width="@dimen/width38"
+        android:layout_height="@dimen/height5"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/margin24"
         android:background="@drawable/custom_block_border_two"/>
@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/margin30"
         android:gravity="left"
         android:orientation="horizontal">
 
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="Резюме для отклика"
+                android:text="@string/cv_for_applied"
                 style="@style/Text1"
                 android:textColor="@color/grey3"/>
             <TextView
@@ -46,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 style="@style/Title3"
-                android:text="UI/UX дизайнер "
                 android:textColor="@color/white"/>
         </LinearLayout>
     </LinearLayout>
@@ -65,15 +64,15 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/margin40"
         style="@style/ButtonText1"
-        android:text="Добавить сопроводительное"/>
+        android:text="@string/add_cover_letter"/>
 
     <EditText
         android:id="@+id/coverLetterField"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="@dimen/height85"
         android:paddingStart="@dimen/padding16"
         android:paddingEnd="@dimen/padding16"
-        android:hint="Ваше сопроводительное письмо"
+        android:hint="@string/your_cover_letter"
         android:visibility="gone"
         android:textColorHint="@color/grey3"
         style="@style/Text1"
@@ -83,9 +82,9 @@
         android:id="@+id/applyButton"
         style="@style/ButtonText2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/height50"
         android:layout_marginTop="@dimen/margin20"
-        android:text="Откликнуться"
+        android:text="@string/applied"
         android:textAllCaps="false"
         app:backgroundTint="@color/button_background_color_green_one"/>
 

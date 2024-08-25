@@ -22,6 +22,7 @@ import com.example.vacancy.databinding.CustomDialogBinding
 import com.example.vacancy.databinding.FragmentVacancyBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 private const val VACANCY_ID_EXTRA_PARAM = "VACANCY_ID_EXTRA_PARAM"
@@ -87,11 +88,16 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
             binding.scrollView.visibility = View.VISIBLE
             binding.title.text = vacancy.title
             binding.salary.text = if (vacancy.salary.short == null) vacancy.salary.full else vacancy.salary.short
-            binding.experience.text = "Требуемый опыт ${vacancy.experience.previewText}"
+            binding.experience.text = "${resources.getString(com.example.ui.R.string.requirementExperience)} ${vacancy.experience.previewText}"
             binding.schedules.text = vacancy.schedules.toString()
+                .replace("[","")
+                .replace("]","")
+                .replaceFirstChar{
+                    if (it. isLowerCase()) it. titlecase(Locale.getDefault()) else it. toString()
+                }
 
-            binding.appliedNumber.text = "${vacancy.appliedNumber} человек уже откликнулись"
-            binding.lookingNumber.text = "${vacancy.lookingNumber} человек сейчас смотрят"
+            binding.appliedNumber.text = "${vacancy.appliedNumber} ${resources.getString(com.example.ui.R.string.appliedPeople)}"
+            binding.lookingNumber.text = "${vacancy.lookingNumber} ${resources.getString(com.example.ui.R.string.appliedPeople)}"
 
             binding.favoriteIcon.setImageResource(
                 if (vacancy.isFavorite) com.example.ui.R.drawable.ic_favorites_select

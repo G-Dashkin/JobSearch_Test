@@ -12,6 +12,7 @@ import com.example.favorites.R
 import com.example.favorites.databinding.FragmentFavoritesBinding
 import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
 import com.example.jobsearch_test.core.navigation.Router
+import com.example.jobsearch_test.core.utils.countNoun
 import com.example.jobsearch_test.favorites.di.DaggerFavoritesComponent
 import com.example.jobsearch_test.favorites.di.FavoritesFeatureDepsProvider
 import com.example.jobsearch_test.models.Vacancy
@@ -57,7 +58,9 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
             when(it) {
                 FavoritesScreenState.Loading -> {}
                 is FavoritesScreenState.Loaded -> {
-                    binding.vacanciesCount.text = "${it.vacancies.size} вакансия" //  “вакансия” должно склоняться в зависимости от числа
+                    binding.vacanciesCount.text = "${it.vacancies.size} ${
+                        resources.getString(countNoun(it.vacancies.size))
+                    }"
                     setVacanciesAdapter(vacanciesList = it.vacancies)
                 }
             }
@@ -73,7 +76,8 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
                     delay(200)
                     parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
                 }
-            }
+            },
+            context = requireContext()
         )
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.vacanciesRecyclerView.adapter = vacanciesAdapter

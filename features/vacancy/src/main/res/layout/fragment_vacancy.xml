@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/margin4"
             android:src="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,11 +72,11 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:indeterminateTint="@color/white"
-        android:maxWidth="72dp"
-        android:maxHeight="72dp"
-        android:minWidth="72dp"
-        android:minHeight="72dp"
-        app:indicatorSize="72dp"
+        android:maxWidth="@dimen/width72"
+        android:maxHeight="@dimen/height72"
+        android:minWidth="@dimen/width72"
+        android:minHeight="@dimen/height72"
+        app:indicatorSize="@dimen/size72"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,8 +84,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/zeroDp"
+        android:layout_height="@dimen/zeroDp"
         android:fillViewport="true"
         android:layout_marginTop="@dimen/margin20"
         android:visibility="gone"
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="@dimen/font24" />
 
             <TextView
                 android:id="@+id/salary"
@@ -138,7 +138,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/height50"
                     android:layout_weight="1"
                     android:background="@drawable/custom_block_border_four"
                     android:padding="@dimen/padding8">
@@ -159,12 +159,12 @@
                 </LinearLayout>
 
                 <View
-                    android:layout_width="8dp"
+                    android:layout_width="@dimen/width8"
                     android:layout_height="match_parent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/height50"
                     android:layout_weight="1"
                     android:background="@drawable/custom_block_border_four"
                     android:padding="@dimen/padding8">
@@ -209,13 +209,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin8"
-                        android:paddingTop="4dp"
+                        android:paddingTop="@dimen/padding4"
                         android:src="@drawable/ic_check" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="@dimen/height72"
                     android:layout_marginTop="@dimen/margin8"
                     android:scaleType="fitCenter"
                     android:src="@drawable/map" />
@@ -243,8 +243,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/font20"
+                android:textStyle="bold"
+                android:text="@string/youTasks"/>
 
             <TextView
                 android:id="@+id/responsibilities"
@@ -258,7 +259,8 @@
                 style="@style/Title4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin24"
+                android:text="@string/employerQuestion"
                 android:textColor="@color/white" />
 
             <TextView
@@ -266,22 +268,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
-                android:textColor="@color/white" />
+                android:text="@string/heGetItWithApplied"
+                android:textColor="@color/grey3" />
 
             <ListView
                 android:id="@+id/questionsList"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="@dimen/margin16"
-                android:dividerHeight="8dp" />
+                android:dividerHeight="@dimen/height8" />
 
             <Button
                 android:id="@+id/applyButton"
                 style="@style/ButtonText2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/height50"
                 android:layout_marginTop="@dimen/margin16"
-                android:text="Откликнуться"
+                android:text="@string/applied"
                 android:textAllCaps="false"
                 android:textColor="@color/text_button_color_one"
                 app:backgroundTint="@color/button_background_color_green_one"

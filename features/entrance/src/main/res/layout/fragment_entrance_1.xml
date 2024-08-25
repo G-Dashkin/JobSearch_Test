@@ -13,19 +13,19 @@
         android:id="@+id/toolbarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
+        android:paddingBottom="@dimen/padding4"
         android:layout_marginTop="@dimen/margin20"
-        android:text="Вход в личный кабинет"
+        android:text="@string/entrance_in_account"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="@dimen/font20"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/zeroDp"
+        android:layout_height="@dimen/zeroDp"
         android:orientation="vertical"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +48,7 @@
                 style="@style/Title3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
+                android:paddingBottom="@dimen/padding20"
                 android:text="@string/job_search"
                 android:textColor="@color/white" />
 
@@ -56,13 +56,13 @@
                 android:id="@+id/emailTextField"
                 style="@style/Title4"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/height40"
                 android:background="@drawable/custom_form_border"
                 android:drawableLeft="@drawable/ic_responses"
-                android:drawablePadding="10dp"
-                android:hint="Электронная почта или телефон"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
+                android:drawablePadding="@dimen/padding8"
+                android:hint="@string/email_or_phone"
+                android:paddingStart="@dimen/padding8"
+                android:paddingEnd="@dimen/padding8"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/grey3" />
@@ -71,9 +71,9 @@
                 android:id="@+id/errorEmailMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Вы ввели неверный e-mail"
+                android:text="@string/email_not_correct"
                 android:textColor="@color/red"
-                android:textSize="13sp"
+                android:textSize="@dimen/font14"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -85,8 +85,8 @@
                 <Button
                     android:id="@+id/continueBottom"
                     style="@style/ButtonText2"
-                    android:layout_width="167dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/width167"
+                    android:layout_height="@dimen/height50"
                     android:text="@string/continueText"
                     android:textAllCaps="false"
                     android:textColor="@color/text_button_color_one"
@@ -117,7 +117,7 @@
                 style="@style/Title3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
+                android:paddingBottom="@dimen/padding20"
                 android:text="@string/employees_search"
                 android:textColor="@color/white" />
 
@@ -125,23 +125,19 @@
                 style="@style/ButtonText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
+                android:paddingBottom="@dimen/padding20"
                 android:text="@string/baseAccess"
                 android:textColor="@color/white" />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/height50"
                 android:text="@string/i_am_looking_for_employees"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/button_background_color_green_one"
                 app:shapeAppearance="@style/shape50" />
         </LinearLayout>
-
-
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

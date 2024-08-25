@@ -100,13 +100,14 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     delay(200)
                     parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
                 }
-
-            }
+            },
+            context = requireContext()
         )
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.vacanciesRecyclerView.adapter = vacanciesAdapter
         homeViewModel.vacancyList.observe(viewLifecycleOwner) {
-            binding.moreVacanciesButton.text = "Еще ${it.size.minus(3)} вакансии"
+            binding.moreVacanciesButton.text = "${resources.getString(com.example.ui.R.string.more)} " +
+                                               "${it.size.minus(3)} ${com.example.ui.R.string.vacancies}"
             vacanciesAdapter.submitList(it.take(3))
         }
     }
@@ -117,7 +118,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.vacanciesText.textSize = 14.toFloat()
         binding.sortBlock.visibility = View.VISIBLE
         homeViewModel.vacancyList.observe(viewLifecycleOwner) {
-            binding.vacanciesText.text = "${it.size} вакансий"
+            binding.vacanciesText.text = "${it.size} ${resources.getString(com.example.ui.R.string.vacancies_)}"
             vacanciesAdapter.submitList(it)
         }
         setArrowBottom()
@@ -169,9 +170,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.vacanciesText.textSize = 20.toFloat()
         binding.sortBlock.visibility = View.GONE
 
+
         homeViewModel.vacancyList.observe(viewLifecycleOwner) {
-            binding.moreVacanciesButton.text = "Еще ${it.size.minus(3)} вакансии"
-            binding.vacanciesText.text = "Вакансии для вас"
+            binding.moreVacanciesButton.text = "${resources.getString(com.example.ui.R.string.more)} " +
+                                               "${it.size.minus(3)} " +
+                                               "${resources.getString(com.example.ui.R.string.vacancies)}"
+            binding.vacanciesText.text = "${resources.getString(com.example.ui.R.string.vacancies_for_you)}"
             vacanciesAdapter.submitList(it.take(3))
         }
     }

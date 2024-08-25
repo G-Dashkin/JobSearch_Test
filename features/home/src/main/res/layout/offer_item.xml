@@ -2,41 +2,41 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/black"
-    android:layout_width="132dp"
+    android:layout_width="@dimen/width132"
     android:layout_marginRight="@dimen/margin8"
-    android:layout_height="120dp">
+    android:layout_height="@dimen/height120">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
+        android:padding="@dimen/padding8"
         android:background="@drawable/custom_block_border_one">
 
         <ImageView
             android:id="@+id/offerIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/width32"
+            android:layout_height="@dimen/height32"
             android:contentDescription="@string/offerIcon"
             app:layout_constraintStart_toStartOf="@+id/offerText"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/offerText"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zeroDp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/font14"
             android:textColor="@color/white"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/margin16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/offerIcon" />
 
         <TextView
             android:id="@+id/offerBottom"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zeroDp"
             android:layout_height="wrap_content"
             android:textColor="@color/green"
             android:visibility="gone"
-            android:text="Поднять"
+            android:text="@string/up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/offerText" />

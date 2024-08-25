@@ -24,15 +24,15 @@
         <EditText
             android:id="@+id/searchTextField"
             style="@style/Title4"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/zeroDp"
+            android:layout_height="@dimen/height40"
             android:layout_marginEnd="@dimen/margin8"
-            android:paddingStart="10dp"
+            android:paddingStart="@dimen/padding8"
             android:layout_weight="1"
             android:background="@drawable/custom_form_border"
             android:drawableLeft="@drawable/ic_search"
-            android:hint="Должность, ключевые слова"
-            android:drawablePadding="10dp"
+            android:hint="@string/key_words"
+            android:drawablePadding="@dimen/padding8"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/grey3"
@@ -57,7 +57,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/offersRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="120dp" />
+        android:layout_height="@dimen/height120" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,9 +71,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Вакансии для вас"
+                android:text="@string/vacancies_for_you"
                 android:textColor="@color/white"
-                android:textSize="20sp"/>
+                android:textSize="@dimen/size20"/>
 
             <LinearLayout
                 android:id="@+id/sortBlock"
@@ -85,14 +85,14 @@
                 android:id="@+id/byComplianceText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="По соответствию"
+                android:text="@string/by_match"
                 android:textColor="@color/blue"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font14"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/margin4"
                     android:layout_marginStart="@dimen/margin8"
                     android:src="@drawable/ic_sort"/>
             </LinearLayout>
@@ -112,11 +112,11 @@
             android:layout_gravity="center"
             android:indeterminateTint="@color/white"
             android:visibility="gone"
-            android:maxWidth="72dp"
-            android:maxHeight="72dp"
-            android:minWidth="72dp"
-            android:minHeight="72dp"
-            app:indicatorSize="72dp"
+            android:maxWidth="@dimen/width72"
+            android:maxHeight="@dimen/height72"
+            android:minWidth="@dimen/width72"
+            android:minHeight="@dimen/height72"
+            app:indicatorSize="@dimen/size72"
             app:layout_constraintBottom_toBottomOf="@+id/moreVacanciesButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,8 +124,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacanciesRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zeroDp"
+            android:layout_height="@dimen/zeroDp"
             app:layout_constraintBottom_toTopOf="@+id/moreVacanciesButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +135,7 @@
             android:id="@+id/moreVacanciesButton"
             style="@style/ButtonText2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/height50"
             android:textAllCaps="false"
             android:textColor="@color/text_button_color_one"
             app:backgroundTint="@color/button_background_color_blue"
