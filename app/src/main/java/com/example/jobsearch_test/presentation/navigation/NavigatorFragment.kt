@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,9 +18,11 @@ import com.example.jobsearch_test.R
 import com.example.jobsearch_test.api.EntranceFeatureApi
 import com.example.jobsearch_test.api.FavoritesFeatureApi
 import com.example.jobsearch_test.api.HomeFeatureApi
+import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.databinding.FragmentNavigatorBinding
 import com.example.jobsearch_test.di.DaggerProvider
+import com.example.jobsearch_test.domain.usecases.GetFavoritesCountUseCase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.NavigationMenu
 import kotlinx.coroutines.delay
@@ -45,6 +48,8 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
     @Inject
     lateinit var favoritesFeatureApi: FavoritesFeatureApi
 
+    @Inject
+    lateinit var getFavoritesCountUseCase: GetFavoritesCountUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +72,9 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (childFragmentManager.backStackEntryCount > 0) childFragmentManager.popBackStack()
-                else requireActivity().finish()
-            }
-        })
+        setBackPressed()
         setBottomNavigation()
+        updateBottomNavigation()
     }
 
     override fun onDestroy() {
@@ -85,16 +86,55 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
 
     override fun context(): Context = requireActivity()
 
-    private fun setBottomNavigation() {
-        binding.bottomNavigation.setOnItemSelectedListener { item->
-            when(item.itemId) {
-                R.id.nav_search -> router.navigateTo(fragment = homeFeatureApi.open())
-                R.id.nav_favorites -> router.navigateTo(fragment = favoritesFeatureApi.open())
-                R.id.nav_responses -> {}
-                R.id.nav_messages -> {}
-                R.id.nav_profile -> {}
+    private fun setBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (childFragmentManager.backStackEntryCount > 0) childFragmentManager.popBackStack()
+                else requireActivity().finish()
             }
-            true
+        })
+    }
+
+    private fun setBottomNavigation() {
+        lifecycleScope.launch {
+            binding.bottomNavigation.getOrCreateBadge(R.id.nav_favorites).apply {
+                this.backgroundColor = ContextCompat.getColor(requireContext(), com.example.ui.R.color.red)
+                this.badgeTextColor = ContextCompat.getColor(requireContext(), com.example.ui.R.color.white)
+                this.maxCharacterCount = 3
+                this.verticalOffset = 25
+                this.horizontalOffset = 15
+
+                setBadgeCount(getFavoritesCountUseCase.execute())
+            }
+            binding.bottomNavigation.setOnItemSelectedListener { item->
+                when(item.itemId) {
+                    R.id.nav_search -> router.navigateTo(fragment = homeFeatureApi.open())
+                    R.id.nav_favorites -> router.navigateTo(fragment = favoritesFeatureApi.open())
+                    R.id.nav_responses -> {}
+                    R.id.nav_messages -> {}
+                    R.id.nav_profile -> {}
+                }
+                true
+            }
+        }
+    }
+
+    private fun updateBottomNavigation() {
+        childFragmentManager.setFragmentResultListener(CALL_BOTTOM_MENU_LISTENER, viewLifecycleOwner){ _, _ ->
+            setBottomNavigation()
+        }
+    }
+
+    private fun setBadgeCount(count: Int) {
+        val menuItemId = R.id.nav_favorites
+        val badge = binding.bottomNavigation.getBadge(menuItemId)
+        if (badge != null) {
+            if (count > 0) {
+                badge.isVisible = true
+                badge.number = count
+            } else {
+                badge.isVisible = false
+            }
         }
     }
 }

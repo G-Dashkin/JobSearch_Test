@@ -4,19 +4,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home.R
 import com.example.home.databinding.FragmentHomeBinding
 import com.example.jobsearch_test.api.VacancyFeatureApi
+import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.home.di.DaggerHomeComponent
 import com.example.jobsearch_test.home.di.HomeFeatureDepsProvider
 import com.example.jobsearch_test.models.JobData
 import com.example.jobsearch_test.models.Offer
 import com.example.jobsearch_test.models.Vacancy
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
@@ -91,6 +96,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             },
             itemFavoriteClick = { itemFavorite ->
                 homeViewModel.selectFavoriteIcon(vacancyId = itemFavorite)
+                lifecycleScope.launch {
+                    // вот это убрать...
+                    delay(200)
+                    parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
+                }
+
             }
         )
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
