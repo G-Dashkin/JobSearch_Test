@@ -7,7 +7,9 @@ import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.data.database.dao.FavoritesDao
 import com.example.jobsearch_test.data.database.factory.AppDatabase
 import com.example.jobsearch_test.data.repository.VacanciesRepositoryImpl
+import com.example.jobsearch_test.data.retrofit.JobDataImpl
 import com.example.jobsearch_test.data.storage.VacanciesStorageImpl
+import com.example.jobsearch_test.data_api.network.JobDataNetwork
 import com.example.jobsearch_test.data_api.repository.VacanciesRepository
 import com.example.jobsearch_test.data_api.storage.VacanciesStorage
 import com.example.jobsearch_test.presentation.navigation.NavigatorLifecycle
@@ -52,6 +54,10 @@ class AppModule(private val application: Application) {
     @Singleton
     fun provideFavoritesDao(db: AppDatabase): FavoritesDao = db.favoritesDao()
 
+    @Provides
+    fun provideJobDataNetwork(): JobDataNetwork = JobDataImpl()
+
+
     @Singleton
     @Provides
     fun provideVacanciesStorage(
@@ -61,10 +67,10 @@ class AppModule(private val application: Application) {
     @Singleton
     @Provides
     fun provideVacanciesRepository(
-        context: Context,
         vacanciesStorage: VacanciesStorage,
+        jobDataNetwork: JobDataNetwork
     ): VacanciesRepository = VacanciesRepositoryImpl(
-        context = context,
-        vacanciesStorage = vacanciesStorage
+        vacanciesStorage = vacanciesStorage,
+        jobDataNetwork = jobDataNetwork
     )
 }

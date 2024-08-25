@@ -83,7 +83,7 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
 
 
     private fun setVacancyData(vacancy: Vacancy) {
-
+        binding.scrollView.visibility = View.VISIBLE
         binding.title.text = vacancy.title
         binding.salary.text = if (vacancy.salary.short == null) vacancy.salary.full else vacancy.salary.short
         binding.experience.text = "Требуемый опыт ${vacancy.experience.previewText}"

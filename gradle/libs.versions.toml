@@ -23,6 +23,9 @@ androidx-activity-ktx = "1.8.2"
 androidx-fragment-ktx = "1.6.2"
 google-material = "1.11.0"
 
+retrofit2 = "2.9.0"
+okhttp3 = "4.11.0"
+
 # DI
 dagger = "2.50"
 
@@ -52,6 +55,11 @@ javax-inject = { group = "javax.inject", name = "javax.inject", version = "1" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+
+# Retrofit
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
+retrofit-converter_json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit2"}
+okhttp3-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3"}
 
 
 [plugins]

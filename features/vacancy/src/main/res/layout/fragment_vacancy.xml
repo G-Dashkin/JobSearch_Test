@@ -65,6 +65,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin24"
@@ -80,8 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="24sp"
-                android:text="UI/UX Designer"/>
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/salary"
@@ -89,8 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin16"
                 android:textColor="@color/white"
-                style="@style/Text1"
-                android:text="Уровень дохода не указан"/>
+                style="@style/Text1"/>
 
             <TextView
                 android:id="@+id/experience"
@@ -98,8 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin16"
                 android:textColor="@color/white"
-                style="@style/Text1"
-                android:text="Требуемый опыт: от 1 года до 3 лет"/>
+                style="@style/Text1"/>
 
             <TextView
                 android:id="@+id/schedules"
@@ -107,8 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:textColor="@color/white"
-                style="@style/Text1"
-                android:text="Полная занятость, полный день"/>
+                style="@style/Text1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,7 +120,6 @@
                     android:background="@drawable/custom_block_border_four">
                     <TextView
                         android:id="@+id/appliedNumber"
-                        android:text="147 человек уже откликнулись"
                         style="@style/Text1"
                         android:layout_weight="1"
                         android:textColor="@color/white"
@@ -147,7 +143,6 @@
                     android:background="@drawable/custom_block_border_four">
                     <TextView
                         android:id="@+id/lookingNumber"
-                        android:text="2 человека сейчас смотрят"
                         style="@style/Text1"
                         android:layout_weight="1"
                         android:textColor="@color/white"
@@ -177,7 +172,6 @@
                     <TextView
                         android:id="@+id/company"
                         style="@style/Text1"
-                        android:text="Мобирикс"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white" />
@@ -202,8 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin8"
                     android:textColor="@color/white"
-                    style="@style/Text1"
-                    android:text="Минск, улица Бирюзова, 4/5"/>
+                    style="@style/Text1"/>
 
             </LinearLayout>
 
@@ -213,8 +206,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:textColor="@color/white"
-                style="@style/Text1"
-                android:text="MOBYRIX - динамично развивающаяся продуктовая IT-компания, специализирующаяся на разработке мобильных приложений для iOS и Android. Наша команда работает над собственными продуктами в разнообразных сферах: от утилит до развлечений и бизнес-приложений. Мы ценим талант и стремление к инновациям и в данный момент в поиске талантливого UX/UI Designer, готового присоединиться к нашей команде и внести значимый вклад в развитие наших проектов."/>
+                style="@style/Text1" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -222,8 +214,7 @@
                 android:layout_marginTop="@dimen/margin8"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="Ваши задачи"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/responsibilities"
@@ -231,26 +222,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:textColor="@color/white"
-                style="@style/Text1"
-                android:text="-Проектировать пользовательский опыт, проводить UX исследования; -Разрабатывать адаптивный дизайн интерфейса для мобильных приложений; -Разрабатывать быстрые прототипы для тестирования идеи дизайна и их последующая; интеграция на основе обратной связи от команды и пользователей; -Взаимодействовать с командой разработчиков для обеспечения точной реализации ваших дизайнов; -Анализ пользовательского опыта и адаптация под тренды."/>
+                style="@style/Text1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:textColor="@color/white"
-                style="@style/Title4"
-                android:text="Задайте вопрос работодателю"/>
+                style="@style/Title4"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:textColor="@color/white"
-                style="@style/Title4"
-                android:text="Он получит его с откликом на вакансию"/>
-
-
+                style="@style/Title4"/>
 
             <ListView
                 android:id="@+id/questionsList"
