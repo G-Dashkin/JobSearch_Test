@@ -14,9 +14,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class HomeScreenState {
+    data object Nothing : HomeScreenState()
     data object Loading : HomeScreenState()
     data class Loaded(val vacancies: List<Vacancy>, val offers: List<Offer>) : HomeScreenState()
     data class LoadedAllVacancies(val vacancies: List<Vacancy>) : HomeScreenState()
+    data class VacancyDetails(val vacancyId: String) : HomeScreenState()
     data object Empty : HomeScreenState()
     data object Error : HomeScreenState()
 }
@@ -45,6 +47,13 @@ class HomeViewModel(
     fun moreVacanciesButtonClicked() {
         viewModelScope.launch {
             _state.value = HomeScreenState.LoadedAllVacancies(vacancies = getVacanciesUseCase.execute())
+        }
+    }
+
+    fun itemVacancyClicked(vacancyId: String) {
+        viewModelScope.launch {
+            _state.value = HomeScreenState.VacancyDetails(vacancyId = vacancyId)
+            _state.value = HomeScreenState.Nothing
         }
     }
 }

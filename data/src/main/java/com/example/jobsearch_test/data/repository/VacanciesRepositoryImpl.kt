@@ -19,6 +19,10 @@ class VacanciesRepositoryImpl @Inject constructor(
 
     override suspend fun getAllOffers(): List<Offer> = getData().offers
 
+    override suspend fun getVacancy(vacancyId: String): Vacancy = getData().vacancies.filter {
+        it.id == vacancyId
+    }.first()
+
     private fun parseJSON(jsonString: String):JobData {
         val gson = Gson()
         return gson.fromJson(jsonString, JobData::class.java)

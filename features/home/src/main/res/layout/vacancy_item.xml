@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:background="@drawable/custom_block_border">
+        android:background="@drawable/custom_block_border_one">
 
         <ImageView
             android:id="@+id/favoriteIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_like"
+            android:src="@drawable/ic_favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_block_border"
+            android:background="@drawable/custom_block_border_one"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,7 +33,6 @@
                 android:id="@+id/lookingNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Сейчас просматривает 1 человек"
                 android:textColor="@color/green"
                 android:textSize="14sp" />
 
@@ -43,7 +42,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
-                android:text="Дизайнер для маркетплейсов Wildberries, Ozon"
                 android:textColor="@color/white" />
 
             <TextView
@@ -51,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
-                android:text="1500-2900 Br"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -62,7 +59,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
-                android:text="Минск"
                 android:textColor="@color/white" />
 
             <LinearLayout
@@ -75,7 +71,6 @@
                     style="@style/Text1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Мобирикс"
                     android:textColor="@color/white" />
 
                 <ImageView
@@ -105,7 +100,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin8"
-                    android:text="Опыт от 1 года до 3 лет"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -115,7 +109,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
-                android:text="Опубликовано 20 февраля"
                 android:textColor="@color/grey3"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -125,11 +118,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="@string/i_am_looking_for_employees"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:backgroundTint="@color/button_background_color_green_one"
             app:shapeAppearance="@style/shape50"
+            style="@style/ButtonText2"
+            android:text="Откликнуться"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>

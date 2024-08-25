@@ -70,10 +70,9 @@ class Entrance2Fragment: Fragment(R.layout.fragment_entrance_2) {
     private fun setState() {
         entrance2ViewModel.state.observe(viewLifecycleOwner) {
             when(it) {
-                is Entrance2Screen.EmptyFields -> emptyFields()
-                is Entrance2Screen.FillingField -> {}
-                is Entrance2Screen.FilledFields -> filledFields()
-                is Entrance2Screen.ConfirmCode -> showMainScreen()
+                Entrance2Screen.EmptyFields -> emptyFields()
+                Entrance2Screen.FilledFields -> filledFields()
+                Entrance2Screen.ConfirmCode -> showMainScreen()
             }
         }
     }
@@ -175,10 +174,6 @@ class Entrance2Fragment: Fragment(R.layout.fragment_entrance_2) {
                 false
             }
         }
-    }
-
-    private fun fillingField(codeNumber:Pair<Int,String>) {
-
     }
 
     private fun showMainScreen(){

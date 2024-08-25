@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":domain_models"))
 
     implementation(project(":features:home_api"))
+    implementation(project(":features:vacancy_api"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

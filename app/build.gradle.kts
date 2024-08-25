@@ -55,6 +55,9 @@ dependencies {
     implementation(project(":features:home"))
     implementation(project(":features:home_api"))
 
+    implementation(project(":features:vacancy"))
+    implementation(project(":features:vacancy_api"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.ktx)

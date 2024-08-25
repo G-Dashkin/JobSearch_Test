@@ -5,5 +5,6 @@ import com.example.jobsearch_test.models.Vacancy
 
 interface VacanciesRepository {
     suspend fun getAllVacancies(): List<Vacancy>
+    suspend fun getVacancy(vacancyId: String): Vacancy
     suspend fun getAllOffers(): List<Offer>
 }

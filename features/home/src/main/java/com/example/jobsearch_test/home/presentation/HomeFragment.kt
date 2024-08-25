@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.home.R
 import com.example.home.databinding.FragmentHomeBinding
+import com.example.jobsearch_test.api.VacancyFeatureApi
+import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.home.di.DaggerHomeComponent
 import com.example.jobsearch_test.home.di.HomeFeatureDepsProvider
 import com.example.jobsearch_test.models.JobData
@@ -29,6 +31,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     @Inject
     lateinit var vmFactory: HomeViewModelFactory
 
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var vacancyFeatureApi: VacancyFeatureApi
+
     private val homeViewModel by viewModels<HomeViewModel> {
         vmFactory
     }
@@ -48,6 +56,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         binding.moreVacanciesButton.setOnClickListener { homeViewModel.moreVacanciesButtonClicked() }
         setState()
+        Log.d("MyLog", "i am home")
     }
 
     private fun setState() {
@@ -60,8 +69,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     setVacanciesAdapter(vacanciesList = it.vacancies.take(3))
                 }
                 is HomeScreenState.LoadedAllVacancies -> showMoreVacancies(vacanciesList = it.vacancies)
+                is HomeScreenState.VacancyDetails -> showVacancyDetails(vacancyId = it.vacancyId)
                 HomeScreenState.Empty -> {}
                 HomeScreenState.Error -> {}
+                HomeScreenState.Nothing -> {}
             }
         }
     }
@@ -74,7 +85,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     private fun setVacanciesAdapter(vacanciesList: List<Vacancy>) {
-        vacanciesAdapter = VacanciesAdapter()
+        vacanciesAdapter = VacanciesAdapter(
+            itemVacancyClick = { itemVacancy ->
+                homeViewModel.itemVacancyClicked(itemVacancy)
+            }
+        )
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.vacanciesRecyclerView.adapter = vacanciesAdapter
         homeViewModel.state.observe(viewLifecycleOwner) {
@@ -91,6 +106,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         homeViewModel.state.observe(viewLifecycleOwner) {
             vacanciesAdapter.submitList(vacanciesList)
         }
+    }
+
+    private fun showVacancyDetails(vacancyId: String) {
+        router.navigateTo(
+            fragment = vacancyFeatureApi.open(vacancyId = vacancyId),
+            addToBackStack = true
+        )
     }
 
 }

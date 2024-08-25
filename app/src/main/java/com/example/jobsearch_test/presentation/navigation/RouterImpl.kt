@@ -1,5 +1,6 @@
 package com.example.jobsearch_test.presentation.navigation
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.jobsearch_test.R
@@ -31,7 +32,9 @@ class RouterImpl: Router, NavigatorLifecycle {
     }
 
     override fun back() {
+        Log.d("MyLog", "here1")
         val manager = navigatorHolder?.manager() ?: throw IllegalArgumentException("NavigationHolder is null")
         manager.popBackStack()
+        Log.d("MyLog", "here2")
     }
 }

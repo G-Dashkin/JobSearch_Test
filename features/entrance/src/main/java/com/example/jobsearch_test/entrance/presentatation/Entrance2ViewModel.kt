@@ -15,7 +15,6 @@ import javax.inject.Inject
 
 sealed class Entrance2Screen {
     data object EmptyFields : Entrance2Screen()
-    data object FillingField : Entrance2Screen()
     data object FilledFields : Entrance2Screen()
     data object ConfirmCode : Entrance2Screen()
 }
@@ -23,8 +22,6 @@ sealed class Entrance2Screen {
 class Entrance2ViewModel(
     val email: String?
 ): ViewModel() {
-
-
 
     private var _code = MutableLiveData(arrayListOf("","","",""))
     private val code: LiveData<ArrayList<String>> = _code
