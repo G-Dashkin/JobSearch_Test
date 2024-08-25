@@ -56,7 +56,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         binding.moreVacanciesButton.setOnClickListener { homeViewModel.moreVacanciesButtonClicked() }
         setState()
-        Log.d("MyLog", "i am home")
     }
 
     private fun setState() {
@@ -88,6 +87,9 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         vacanciesAdapter = VacanciesAdapter(
             itemVacancyClick = { itemVacancy ->
                 homeViewModel.itemVacancyClicked(itemVacancy)
+            },
+            itemFavoriteClick = { itemFavorite ->
+                homeViewModel.selectFavoriteIcon(vacancyId = itemFavorite)
             }
         )
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())

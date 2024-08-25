@@ -32,9 +32,7 @@ class RouterImpl: Router, NavigatorLifecycle {
     }
 
     override fun back() {
-        Log.d("MyLog", "here1")
         val manager = navigatorHolder?.manager() ?: throw IllegalArgumentException("NavigationHolder is null")
         manager.popBackStack()
-        Log.d("MyLog", "here2")
     }
 }

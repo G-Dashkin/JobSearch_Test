@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/entrance" />
             <option value="$PROJECT_DIR$/features/entrance_api" />
+            <option value="$PROJECT_DIR$/features/favorites" />
+            <option value="$PROJECT_DIR$/features/favorites_api" />
             <option value="$PROJECT_DIR$/features/home" />
             <option value="$PROJECT_DIR$/features/home_api" />
             <option value="$PROJECT_DIR$/features/vacancy" />

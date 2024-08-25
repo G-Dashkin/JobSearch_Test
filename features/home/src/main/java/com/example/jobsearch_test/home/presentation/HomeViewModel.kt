@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.jobsearch_test.home.domain.usecases.GetOffersUseCase
 import com.example.jobsearch_test.home.domain.usecases.GetVacanciesUseCase
+import com.example.jobsearch_test.home.domain.usecases.SelectFavoriteVacanciesUseCase
 import com.example.jobsearch_test.models.Offer
 import com.example.jobsearch_test.models.Vacancy
 import kotlinx.coroutines.launch
@@ -25,7 +26,8 @@ sealed class HomeScreenState {
 
 class HomeViewModel(
     private val getOffersUseCase: GetOffersUseCase,
-    private val getVacanciesUseCase: GetVacanciesUseCase
+    private val getVacanciesUseCase: GetVacanciesUseCase,
+    private val selectFavoriteVacanciesUseCase: SelectFavoriteVacanciesUseCase
 ): ViewModel() {
 
     private val _state = MutableLiveData<HomeScreenState>(HomeScreenState.Loading)
@@ -56,11 +58,19 @@ class HomeViewModel(
             _state.value = HomeScreenState.Nothing
         }
     }
+
+    fun selectFavoriteIcon(vacancyId: String){
+        viewModelScope.launch {
+            selectFavoriteVacanciesUseCase.execute(vacancyId)
+        }
+    }
+
 }
 
 class HomeViewModelFactory @Inject constructor(
     private val getOffersUseCase: GetOffersUseCase,
     private val getVacanciesUseCase: GetVacanciesUseCase,
+    private val selectFavoriteVacanciesUseCase: SelectFavoriteVacanciesUseCase
 ):  ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(
@@ -69,7 +79,8 @@ class HomeViewModelFactory @Inject constructor(
     ): T {
         return HomeViewModel(
             getOffersUseCase = getOffersUseCase,
-            getVacanciesUseCase = getVacanciesUseCase
+            getVacanciesUseCase = getVacanciesUseCase,
+            selectFavoriteVacanciesUseCase = selectFavoriteVacanciesUseCase
         ) as T
     }
 }

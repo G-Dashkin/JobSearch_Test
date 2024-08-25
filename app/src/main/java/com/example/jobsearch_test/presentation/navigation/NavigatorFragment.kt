@@ -73,20 +73,7 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
                 else requireActivity().finish()
             }
         })
-
-        binding.bottomNavigation.setOnItemSelectedListener { item->
-            Log.d("MyLog", "dddd")
-            when(item.itemId) {
-                R.id.nav_search -> router.navigateTo(fragment = homeFeatureApi.open())
-                R.id.nav_favorites -> router.navigateTo(fragment = favoritesFeatureApi.open())
-                R.id.nav_responses -> {}
-                R.id.nav_messages -> {}
-                R.id.nav_profile -> {}
-            }
-            true
-        }
-
-
+        setBottomNavigation()
     }
 
     override fun onDestroy() {
@@ -97,4 +84,17 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
     override fun manager(): FragmentManager = childFragmentManager
 
     override fun context(): Context = requireActivity()
+
+    private fun setBottomNavigation() {
+        binding.bottomNavigation.setOnItemSelectedListener { item->
+            when(item.itemId) {
+                R.id.nav_search -> router.navigateTo(fragment = homeFeatureApi.open())
+                R.id.nav_favorites -> router.navigateTo(fragment = favoritesFeatureApi.open())
+                R.id.nav_responses -> {}
+                R.id.nav_messages -> {}
+                R.id.nav_profile -> {}
+            }
+            true
+        }
+    }
 }

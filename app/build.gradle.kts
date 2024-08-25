@@ -51,13 +51,10 @@ dependencies {
 
     implementation(project(":features:entrance"))
     implementation(project(":features:entrance_api"))
-
     implementation(project(":features:home"))
     implementation(project(":features:home_api"))
-
     implementation(project(":features:vacancy"))
     implementation(project(":features:vacancy_api"))
-
     implementation(project(":features:favorites"))
     implementation(project(":features:favorites_api"))
 
@@ -71,5 +68,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    // Room
+    implementation(libs.androidx.room.ktx)
 
 }

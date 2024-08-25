@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favorites.R
 import com.example.favorites.databinding.FragmentFavoritesBinding
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.favorites.di.DaggerFavoritesComponent
 import com.example.jobsearch_test.favorites.di.FavoritesFeatureDepsProvider
+import com.example.jobsearch_test.models.Vacancy
 import javax.inject.Inject
 
 class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
@@ -18,7 +21,14 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
     }
 
     private lateinit var binding: FragmentFavoritesBinding
+    private lateinit var vacanciesAdapter: VacanciesAdapter
 
+    @Inject
+    lateinit var vmFactory: FavoritesViewModelFactory
+
+    private val favoritesViewModel by viewModels<FavoritesViewModel> {
+        vmFactory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,5 +42,36 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoritesBinding.bind(view)
+
+        setState()
+    }
+
+
+    private fun setState() {
+        favoritesViewModel.state.observe(viewLifecycleOwner) {
+            when(it) {
+                FavoritesScreenState.Loading -> {}
+                is FavoritesScreenState.Loaded -> {
+                    binding.vacanciesCount.text = "${it.vacancies.size} вакансия" //  “вакансия” должно склоняться в зависимости от числа
+                    setVacanciesAdapter(vacanciesList = it.vacancies)
+                }
+                FavoritesScreenState.Empty -> {}
+                FavoritesScreenState.Error -> {}
+                FavoritesScreenState.Nothing -> {}
+            }
+        }
+    }
+
+    private fun setVacanciesAdapter(vacanciesList: List<Vacancy>) {
+        vacanciesAdapter = VacanciesAdapter(
+            itemFavoriteClick = { itemFavorite ->
+                favoritesViewModel.selectFavoriteIcon(vacancyId = itemFavorite)
+            }
+        )
+        binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.vacanciesRecyclerView.adapter = vacanciesAdapter
+        favoritesViewModel.state.observe(viewLifecycleOwner) {
+            vacanciesAdapter.submitList(vacanciesList)
+        }
     }
 }

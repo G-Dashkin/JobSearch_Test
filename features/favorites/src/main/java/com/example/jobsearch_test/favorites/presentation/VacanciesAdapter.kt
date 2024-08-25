@@ -1,4 +1,4 @@
-package com.example.jobsearch_test.home.presentation
+package com.example.jobsearch_test.favorites.presentation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.home.databinding.VacancyItemBinding
+import com.example.favorites.databinding.VacancyItemBinding
 import com.example.jobsearch_test.models.Vacancy
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class VacanciesAdapter(
-    private val itemVacancyClick: (String) -> Unit,
     private val itemFavoriteClick: (String) -> Unit
 ): ListAdapter<Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
@@ -29,7 +28,7 @@ class VacanciesAdapter(
         viewHolder.bind(item)
     }
 
-    inner class VacancyViewHolder(private val binding: VacancyItemBinding):RecyclerView.ViewHolder(binding.root){
+    inner class VacancyViewHolder(private val binding: VacancyItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(vacancy: Vacancy) {
 
             binding.lookingNumber.text = "Сейчас просматривает ${vacancy.lookingNumber} человек"
@@ -42,7 +41,7 @@ class VacanciesAdapter(
             binding.experience.text = vacancy.experience.previewText
             binding.publishedDate.text = vacancy.publishedDate
             binding.publishedDate.text = "Опубликовано ${monthFormat.format(dateFormat.parse(vacancy.publishedDate))}"
-            binding.root.setOnClickListener { itemVacancyClick.invoke(vacancy.id) }
+
             binding.favoriteIcon.setOnClickListener { itemFavoriteClick.invoke(vacancy.id) }
         }
     }
