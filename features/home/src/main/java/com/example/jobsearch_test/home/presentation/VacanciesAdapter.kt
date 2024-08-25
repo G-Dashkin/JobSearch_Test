@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.home.R
 import com.example.home.databinding.VacancyItemBinding
 import com.example.jobsearch_test.models.Vacancy
+import com.example.jobsearch_test.models.VacancyItem
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class VacanciesAdapter(
     private val itemVacancyClick: (String) -> Unit,
     private val itemFavoriteClick: (String) -> Unit
-): ListAdapter<Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
+): ListAdapter<VacancyItem, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("ru"))
     val monthFormat = SimpleDateFormat("MM MMMM", Locale("ru"))
@@ -52,10 +53,13 @@ class VacanciesAdapter(
         }
     }
 
-    internal class VacancyDiffCallback : DiffUtil.ItemCallback<Vacancy>(){
-        override fun areItemsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
-            oldItem == newItem
-        override fun areContentsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
-            oldItem.id == newItem.id
+    internal class VacancyDiffCallback : DiffUtil.ItemCallback<VacancyItem>(){
+        override fun areItemsTheSame(oldItem: VacancyItem, newItem: VacancyItem): Boolean =
+            oldItem.id() == newItem.id()
+        override fun areContentsTheSame(oldItem: VacancyItem, newItem: VacancyItem): Boolean =
+            oldItem.content(newItem)
+        override fun getChangePayload(oldItem: VacancyItem, newItem: VacancyItem): Any {
+            return oldItem.payload(newItem)
+        }
     }
 }
