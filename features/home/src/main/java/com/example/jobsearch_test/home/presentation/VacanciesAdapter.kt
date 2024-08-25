@@ -16,7 +16,7 @@ import java.util.Locale
 class VacanciesAdapter(
     private val itemVacancyClick: (String) -> Unit,
     private val itemFavoriteClick: (String) -> Unit
-): ListAdapter<VacancyItem, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
+): ListAdapter<Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("ru"))
     val monthFormat = SimpleDateFormat("MM MMMM", Locale("ru"))
@@ -53,12 +53,12 @@ class VacanciesAdapter(
         }
     }
 
-    internal class VacancyDiffCallback : DiffUtil.ItemCallback<VacancyItem>(){
-        override fun areItemsTheSame(oldItem: VacancyItem, newItem: VacancyItem): Boolean =
+    internal class VacancyDiffCallback : DiffUtil.ItemCallback<Vacancy>(){
+        override fun areItemsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
             oldItem.id() == newItem.id()
-        override fun areContentsTheSame(oldItem: VacancyItem, newItem: VacancyItem): Boolean =
+        override fun areContentsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
             oldItem.content(newItem)
-        override fun getChangePayload(oldItem: VacancyItem, newItem: VacancyItem): Any {
+        override fun getChangePayload(oldItem: Vacancy, newItem: Vacancy): Any {
             return oldItem.payload(newItem)
         }
     }

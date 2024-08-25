@@ -52,8 +52,11 @@ class VacanciesAdapter(
 
     internal class VacancyDiffCallback : DiffUtil.ItemCallback<Vacancy>(){
         override fun areItemsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
-            oldItem == newItem
+            oldItem.id() == newItem.id()
         override fun areContentsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
-            oldItem.id == newItem.id
+            oldItem.content(newItem)
+        override fun getChangePayload(oldItem: Vacancy, newItem: Vacancy): Any {
+            return oldItem.payload(newItem)
+        }
     }
 }
