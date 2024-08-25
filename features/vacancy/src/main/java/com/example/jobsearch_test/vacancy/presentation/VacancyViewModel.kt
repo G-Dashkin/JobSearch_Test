@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 sealed class VacancyScreen {
     data object Loading : VacancyScreen()
     data class Loaded(val vacancy: Vacancy) : VacancyScreen()
+    data object Apply : VacancyScreen()
     data object Empty : VacancyScreen()
     data object Error : VacancyScreen()
     data object Back : VacancyScreen()
@@ -40,10 +41,14 @@ class VacancyViewModel(
         }
     }
 
-    fun arrowBackClicked() {
+    fun applyButtonClicked() {
         viewModelScope.launch {
-            _state.value = VacancyScreen.Back
+            _state.value = VacancyScreen.Apply
         }
+    }
+
+    fun arrowBackClicked() {
+        _state.value = VacancyScreen.Back
     }
 
 }

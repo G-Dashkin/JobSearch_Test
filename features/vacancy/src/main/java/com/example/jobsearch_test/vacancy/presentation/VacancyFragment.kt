@@ -1,17 +1,26 @@
 package com.example.jobsearch_test.vacancy.presentation
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.models.Vacancy
 import com.example.jobsearch_test.vacancy.di.DaggerVacancyComponent
 import com.example.jobsearch_test.vacancy.di.VacancyFeatureDepsProvider
 import com.example.vacancy.R
+import com.example.vacancy.databinding.CustomDialogBinding
 import com.example.vacancy.databinding.FragmentVacancyBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val VACANCY_ID_EXTRA_PARAM = "VACANCY_ID_EXTRA_PARAM"
@@ -29,6 +38,7 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
     }
 
     private lateinit var binding: FragmentVacancyBinding
+    private lateinit var bindingCustomDialog: CustomDialogBinding
 
     @Inject
     lateinit var router: Router
@@ -54,6 +64,7 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         binding = FragmentVacancyBinding.bind(view)
 
         binding.arrowBack.setOnClickListener { vacancyViewModel.arrowBackClicked() }
+        binding.applyButton.setOnClickListener { vacancyViewModel.applyButtonClicked() }
         setState()
     }
 
@@ -65,6 +76,7 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
                 VacancyScreen.Empty -> {}
                 VacancyScreen.Error -> {}
                 VacancyScreen.Back -> showBackFragment()
+                VacancyScreen.Apply -> showApplyDialog()
             }
         }
     }
@@ -84,6 +96,26 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
 //        binding.questions.adapter = QuestionsListAdapter(requireContext(), vacancy.questions)
     }
 
+    private fun showApplyDialog() {
+
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+
+        val inflater = requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        bindingCustomDialog = CustomDialogBinding.inflate(inflater)
+        dialog.setContentView(bindingCustomDialog.root)
+        dialog.show()
+        bindingCustomDialog.title.text = "название вакансс"
+        bindingCustomDialog.addCoverLetter.setOnClickListener {
+            bindingCustomDialog.coverLetterField.visibility = View.VISIBLE
+            bindingCustomDialog.addCoverLetter.visibility = View.GONE
+        }
+        bindingCustomDialog.applyButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+    }
     private fun showBackFragment(){
         router.back()
     }

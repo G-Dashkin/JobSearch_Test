@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:minWidth="360dp"
+    android:minHeight="300dp"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="38dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin24"
+        android:background="@drawable/custom_block_border_two"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_apply"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin16"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Резюме для отклика"
+                style="@style/Text1"
+                android:textColor="@color/grey3"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                style="@style/Title3"
+                android:text="UI/UX дизайнер "
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/margin24"
+        android:background="@color/grey2"/>
+
+    <TextView
+        android:id="@+id/addCoverLetter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/margin40"
+        style="@style/ButtonText1"
+        android:text="Добавить сопроводительное"/>
+
+    <EditText
+        android:id="@+id/coverLetterField"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:hint="Ваше сопроводительное письмо"
+        android:visibility="gone"
+        android:textColorHighlight="@color/grey3"
+        style="@style/Text1"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/applyButton"
+        style="@style/ButtonText2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/margin20"
+        android:text="Откликнуться"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/button_background_color_green_one"/>
+
+</LinearLayout>
