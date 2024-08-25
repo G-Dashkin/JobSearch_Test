@@ -36,6 +36,7 @@ class VacanciesRepositoryImpl @Inject constructor(
     override suspend fun getFavoritesVacancies(): List<Vacancy> {
         val favoritesVacancies = vacanciesStorage.getFavorites()
         return getJobData().vacancies.filter { vacancy ->
+            Log.d("MyLog", vacancy.toString())
             favoritesVacancies.contains(vacancy.id)
         }.map { selectedVacancy ->
             selectedVacancy.toDomain(true)

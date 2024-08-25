@@ -16,7 +16,7 @@ class VacanciesAdapter(
 ): ListAdapter<Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("ru"))
-    val monthFormat = SimpleDateFormat("MM MMMM", Locale("ru"))
+    val monthFormat = SimpleDateFormat("d MMMM", Locale("ru"))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return VacancyViewHolder(binding = VacancyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))

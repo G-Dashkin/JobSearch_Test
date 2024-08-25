@@ -66,15 +66,14 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
 
         binding.arrowBack.setOnClickListener { vacancyViewModel.arrowBackClicked() }
         setState()
+        setVacancyData()
     }
 
     private fun setState() {
         vacancyViewModel.state.observe(viewLifecycleOwner) {
             when(it) {
-                VacancyScreen.Loading -> {}
-                is VacancyScreen.Loaded -> setVacancyData(vacancy = it.vacancy)
-                VacancyScreen.Empty -> {}
-                VacancyScreen.Error -> {}
+                VacancyScreen.Loading -> showLoadingIndicator()
+                is VacancyScreen.Loaded -> setVacancyData()
                 VacancyScreen.Back -> showBackFragment()
                 is VacancyScreen.Apply -> showApplyDialog(vacancyTitle = it.vacancyTitle)
             }
@@ -82,29 +81,32 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
     }
 
 
-    private fun setVacancyData(vacancy: Vacancy) {
-        binding.scrollView.visibility = View.VISIBLE
-        binding.title.text = vacancy.title
-        binding.salary.text = if (vacancy.salary.short == null) vacancy.salary.full else vacancy.salary.short
-        binding.experience.text = "Требуемый опыт ${vacancy.experience.previewText}"
-        binding.schedules.text = vacancy.schedules.toString()
+    private fun setVacancyData() {
+        vacancyViewModel.vacancy.observe(viewLifecycleOwner) { vacancy ->
+            binding.circularProgressIndicator.visibility = View.GONE
+            binding.scrollView.visibility = View.VISIBLE
+            binding.title.text = vacancy.title
+            binding.salary.text = if (vacancy.salary.short == null) vacancy.salary.full else vacancy.salary.short
+            binding.experience.text = "Требуемый опыт ${vacancy.experience.previewText}"
+            binding.schedules.text = vacancy.schedules.toString()
 
-        binding.appliedNumber.text = "${vacancy.appliedNumber} человек уже откликнулись"
-        binding.lookingNumber.text = "${vacancy.lookingNumber} человек сейчас смотрят"
+            binding.appliedNumber.text = "${vacancy.appliedNumber} человек уже откликнулись"
+            binding.lookingNumber.text = "${vacancy.lookingNumber} человек сейчас смотрят"
 
-        binding.favoriteIcon.setImageResource(
-            if (vacancy.isFavorite) com.example.ui.R.drawable.ic_favorites_select
-            else com.example.ui.R.drawable.ic_favorite
-        )
+            binding.favoriteIcon.setImageResource(
+                if (vacancy.isFavorite) com.example.ui.R.drawable.ic_favorites_select
+                else com.example.ui.R.drawable.ic_favorite
+            )
 
-        binding.company.text = vacancy.company
-        binding.companyAddress.text = "${vacancy.address.town}, ${vacancy.address.street}, ${vacancy.address.house}"
-        binding.description.text = vacancy.description
-        binding.responsibilities.text = vacancy.responsibilities
-        binding.favoriteIcon.setOnClickListener { changeIsFavoriteIcon(vacancy) }
-        binding.applyButton.setOnClickListener { vacancyViewModel.applyButtonClicked(vacancy.title) }
-        binding.questionsList.adapter = QuestionsListAdapter(requireContext(), vacancy.questions)
-        setListViewSettings()
+            binding.company.text = vacancy.company
+            binding.companyAddress.text = "${vacancy.address.town}, ${vacancy.address.street}, ${vacancy.address.house}"
+            binding.description.text = vacancy.description
+            binding.responsibilities.text = vacancy.responsibilities
+            binding.favoriteIcon.setOnClickListener { changeIsFavoriteIcon(vacancy) }
+            binding.applyButton.setOnClickListener { vacancyViewModel.applyButtonClicked(vacancy.title) }
+            binding.questionsList.adapter = QuestionsListAdapter(requireContext(), vacancy.questions)
+            setListViewSettings()
+        }
     }
 
     private fun showApplyDialog(vacancyTitle: String) {
@@ -153,8 +155,6 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
             totalHeight += mView.measuredHeight
         }
-
-        // Set the ListView height
         val params = binding.questionsList.layoutParams
         params.height = totalHeight + (binding.questionsList.dividerHeight * (binding.questionsList.adapter.count - 1))
         binding.questionsList.layoutParams = params
@@ -162,5 +162,10 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
 
     private fun showBackFragment(){
         router.back()
+    }
+
+
+    private fun showLoadingIndicator() {
+        binding.circularProgressIndicator.visibility = View.VISIBLE
     }
 }

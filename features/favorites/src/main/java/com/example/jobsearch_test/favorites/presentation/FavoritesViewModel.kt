@@ -13,11 +13,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class FavoritesScreenState {
-    data object Nothing : FavoritesScreenState()
     data object Loading : FavoritesScreenState()
     data class Loaded(val vacancies: List<Vacancy>) : FavoritesScreenState()
-    data object Empty : FavoritesScreenState()
-    data object Error : FavoritesScreenState()
 }
 
 class FavoritesViewModel(

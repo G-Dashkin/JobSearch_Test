@@ -53,6 +53,7 @@
         android:layout_marginTop="@dimen/margin20"
         android:orientation="vertical">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/offersRecyclerView"
         android:layout_width="match_parent"
@@ -103,6 +104,24 @@
         android:layout_marginTop="@dimen/margin20"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/circularProgressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone"
+            android:maxWidth="72dp"
+            android:maxHeight="72dp"
+            android:minWidth="72dp"
+            android:minHeight="72dp"
+            app:indicatorSize="72dp"
+            app:layout_constraintBottom_toBottomOf="@+id/moreVacanciesButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vacanciesRecyclerView" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacanciesRecyclerView"
             android:layout_width="0dp"
@@ -117,7 +136,6 @@
             style="@style/ButtonText2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Еще 143 вакансии"
             android:textAllCaps="false"
             android:textColor="@color/text_button_color_one"
             app:backgroundTint="@color/button_background_color_blue"

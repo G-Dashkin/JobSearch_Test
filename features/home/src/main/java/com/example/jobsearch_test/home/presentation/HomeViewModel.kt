@@ -22,7 +22,6 @@ sealed class HomeScreenState {
     data class LoadedAllVacancies(val vacancies: List<Vacancy>) : HomeScreenState()
     data class VacancyDetails(val vacancyId: String) : HomeScreenState()
     data object Empty : HomeScreenState()
-    data object Error : HomeScreenState()
 }
 
 class HomeViewModel(

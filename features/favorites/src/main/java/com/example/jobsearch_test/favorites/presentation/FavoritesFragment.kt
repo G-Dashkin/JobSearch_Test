@@ -60,9 +60,6 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
                     binding.vacanciesCount.text = "${it.vacancies.size} вакансия" //  “вакансия” должно склоняться в зависимости от числа
                     setVacanciesAdapter(vacanciesList = it.vacancies)
                 }
-                FavoritesScreenState.Empty -> {}
-                FavoritesScreenState.Error -> {}
-                FavoritesScreenState.Nothing -> {}
             }
         }
     }

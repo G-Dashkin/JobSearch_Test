@@ -69,12 +69,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private fun setState() {
         homeViewModel.state.observe(viewLifecycleOwner) {
             when(it) {
-                HomeScreenState.Loading -> {}
+                HomeScreenState.Loading -> showLoadingIndicator()
                 is HomeScreenState.Loaded -> showVacanciesData()
                 is HomeScreenState.LoadedAllVacancies -> showMoreVacancies()
                 is HomeScreenState.VacancyDetails -> showVacancyDetails(vacancyId = it.vacancyId)
                 HomeScreenState.Empty -> {}
-                HomeScreenState.Error -> {}
                 HomeScreenState.Nothing -> {}
             }
         }
@@ -156,6 +155,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     private fun showVacanciesData(){
+        binding.circularProgressIndicator.visibility = View.GONE
+        binding.vacanciesText.visibility = View.VISIBLE
         binding.searchTextField.setCompoundDrawablesRelativeWithIntrinsicBounds(
             com.example.ui.R.drawable.ic_search,
             0,
@@ -173,6 +174,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             binding.vacanciesText.text = "Вакансии для вас"
             vacanciesAdapter.submitList(it.take(3))
         }
+    }
+
+    private fun showLoadingIndicator() {
+        binding.circularProgressIndicator.visibility = View.VISIBLE
+        binding.moreVacanciesButton.visibility = View.GONE
+        binding.vacanciesText.visibility = View.GONE
     }
 
 }

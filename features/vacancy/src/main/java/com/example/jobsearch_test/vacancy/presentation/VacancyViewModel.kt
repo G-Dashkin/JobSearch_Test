@@ -16,10 +16,8 @@ import kotlinx.coroutines.launch
 
 sealed class VacancyScreen {
     data object Loading : VacancyScreen()
-    data class Loaded(val vacancy: Vacancy) : VacancyScreen()
+    data object Loaded : VacancyScreen()
     data class Apply(val vacancyTitle: String) : VacancyScreen()
-    data object Empty : VacancyScreen()
-    data object Error : VacancyScreen()
     data object Back : VacancyScreen()
 }
 
@@ -29,7 +27,10 @@ class VacancyViewModel(
     private val selectFavoriteVacanciesUseCase: SelectFavoriteVacanciesUseCase
 ): ViewModel() {
 
-    private val _state = MutableLiveData<VacancyScreen>(VacancyScreen.Loading)
+    private val _vacancy = MutableLiveData<Vacancy>()
+    val vacancy: LiveData<Vacancy> = _vacancy
+
+    private val _state = MutableLiveData<VacancyScreen>()
     val state: LiveData<VacancyScreen> = _state
 
 
@@ -39,7 +40,9 @@ class VacancyViewModel(
 
     private fun loadVacancy() {
         viewModelScope.launch {
-            _state.value = VacancyScreen.Loaded(getVacancyUseCase.execute(vacancyId))
+            _vacancy.postValue(getVacancyUseCase.execute(vacancyId))
+            if (vacancy.value?.title.isNullOrEmpty()) _state.value = VacancyScreen.Loading
+            else _state.value = VacancyScreen.Loaded
         }
     }
 
