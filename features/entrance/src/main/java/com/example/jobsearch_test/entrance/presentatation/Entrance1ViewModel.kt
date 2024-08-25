@@ -36,7 +36,7 @@ class Entrance1ViewModel: ViewModel() {
         else _state.value = Entrance1Screen.FillingField
     }
 
-    fun clearField() {
+    fun clearFieldIconClicked() {
         _state.value = Entrance1Screen.EmptyField
     }
 

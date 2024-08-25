@@ -35,6 +35,7 @@ class FavoritesViewModel(
     fun selectFavoriteIcon(vacancyId: String){
         viewModelScope.launch {
             selectFavoriteVacanciesUseCase.execute(vacancyId)
+            loadVacanciesList()
         }
     }
 

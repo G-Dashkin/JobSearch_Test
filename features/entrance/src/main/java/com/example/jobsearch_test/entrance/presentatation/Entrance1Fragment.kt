@@ -98,7 +98,7 @@ class Entrance1Fragment: Fragment(R.layout.fragment_entrance_1)  {
                     try {
                         val iconWidth = binding.emailTextField.getCompoundDrawables()[2].bounds.width()
                         val clickSpace = binding.emailTextField.right - event.rawX.toInt()
-                        if (clickSpace <= iconWidth) entrance1ViewModel.clearField()
+                        if (clickSpace <= iconWidth) entrance1ViewModel.clearFieldIconClicked()
                     } catch (e: Exception) {}
                     true
                 }

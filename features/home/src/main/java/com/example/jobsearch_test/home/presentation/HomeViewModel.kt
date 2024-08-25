@@ -1,5 +1,6 @@
 package com.example.jobsearch_test.home.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,7 @@ import javax.inject.Inject
 sealed class HomeScreenState {
     data object Nothing : HomeScreenState()
     data object Loading : HomeScreenState()
-    data class Loaded(val vacancies: List<Vacancy>, val offers: List<Offer>) : HomeScreenState()
+    data object Loaded : HomeScreenState()
     data class LoadedAllVacancies(val vacancies: List<Vacancy>) : HomeScreenState()
     data class VacancyDetails(val vacancyId: String) : HomeScreenState()
     data object Empty : HomeScreenState()
@@ -30,6 +31,12 @@ class HomeViewModel(
     private val selectFavoriteVacanciesUseCase: SelectFavoriteVacanciesUseCase
 ): ViewModel() {
 
+    private val _vacancyList = MutableLiveData<List<Vacancy>>()
+    val vacancyList: LiveData<List<Vacancy>> = _vacancyList
+
+    private val _offerList = MutableLiveData<List<Offer>>()
+    val offerList: LiveData<List<Offer>> = _offerList
+
     private val _state = MutableLiveData<HomeScreenState>(HomeScreenState.Loading)
     val state: LiveData<HomeScreenState> = _state
 
@@ -39,10 +46,13 @@ class HomeViewModel(
 
     private fun loadVacanciesList() {
         viewModelScope.launch {
-            _state.value = HomeScreenState.Loaded(
-                vacancies = getVacanciesUseCase.execute(),
-                offers = getOffersUseCase.execute()
-            )
+            _vacancyList.postValue(getVacanciesUseCase.execute())
+            _offerList.postValue(getOffersUseCase.execute())
+            if (vacancyList.value.isNullOrEmpty() && offerList.value.isNullOrEmpty()) {
+                _state.value = HomeScreenState.Empty
+            } else {
+                _state.value = HomeScreenState.Loaded
+            }
         }
     }
 
@@ -62,7 +72,12 @@ class HomeViewModel(
     fun selectFavoriteIcon(vacancyId: String){
         viewModelScope.launch {
             selectFavoriteVacanciesUseCase.execute(vacancyId)
+            loadVacanciesList()
         }
+    }
+
+    fun backArrowClicked() {
+        _state.value = HomeScreenState.Loaded
     }
 
 }

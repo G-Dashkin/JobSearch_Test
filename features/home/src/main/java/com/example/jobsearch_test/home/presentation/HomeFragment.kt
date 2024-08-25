@@ -2,6 +2,7 @@ package com.example.jobsearch_test.home.presentation
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,21 +54,19 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-
         binding.moreVacanciesButton.setOnClickListener { homeViewModel.moreVacanciesButtonClicked() }
+
         setState()
+        setOffersAdapter()
+        setVacanciesAdapter()
     }
 
     private fun setState() {
         homeViewModel.state.observe(viewLifecycleOwner) {
             when(it) {
                 HomeScreenState.Loading -> {}
-                is HomeScreenState.Loaded -> {
-                    binding.moreVacanciesButton.text = "Еще ${it.vacancies.size.minus(3)} вакансии"
-                    setOffersAdapter(offersList = it.offers)
-                    setVacanciesAdapter(vacanciesList = it.vacancies.take(3))
-                }
-                is HomeScreenState.LoadedAllVacancies -> showMoreVacancies(vacanciesList = it.vacancies)
+                is HomeScreenState.Loaded -> showVacanciesData()
+                is HomeScreenState.LoadedAllVacancies -> showMoreVacancies()
                 is HomeScreenState.VacancyDetails -> showVacancyDetails(vacancyId = it.vacancyId)
                 HomeScreenState.Empty -> {}
                 HomeScreenState.Error -> {}
@@ -76,14 +75,16 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun setOffersAdapter(offersList: List<Offer>) {
-        offersAdapter = OffersAdapter(offersList)
-        binding.offersRecyclerView.setHasFixedSize(true)
-        binding.offersRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        binding.offersRecyclerView.adapter = offersAdapter
+    private fun setOffersAdapter() {
+        homeViewModel.offerList.observe(viewLifecycleOwner) {
+            offersAdapter = OffersAdapter(it)
+            binding.offersRecyclerView.setHasFixedSize(true)
+            binding.offersRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            binding.offersRecyclerView.adapter = offersAdapter
+        }
     }
 
-    private fun setVacanciesAdapter(vacanciesList: List<Vacancy>) {
+    private fun setVacanciesAdapter() {
         vacanciesAdapter = VacanciesAdapter(
             itemVacancyClick = { itemVacancy ->
                 homeViewModel.itemVacancyClicked(itemVacancy)
@@ -94,20 +95,22 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         )
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.vacanciesRecyclerView.adapter = vacanciesAdapter
-        homeViewModel.state.observe(viewLifecycleOwner) {
-            vacanciesAdapter.submitList(vacanciesList)
+        homeViewModel.vacancyList.observe(viewLifecycleOwner) {
+            binding.moreVacanciesButton.text = "Еще ${it.size.minus(3)} вакансии"
+            vacanciesAdapter.submitList(it.take(3))
         }
     }
 
-    private fun showMoreVacancies(vacanciesList: List<Vacancy>) {
+    private fun showMoreVacancies() {
         binding.moreVacanciesButton.visibility = View.GONE
         binding.offersRecyclerView.visibility = View.GONE
-        binding.vacanciesText.text = "${vacanciesList.size} вакансий"
         binding.vacanciesText.textSize = 14.toFloat()
         binding.sortBlock.visibility = View.VISIBLE
-        homeViewModel.state.observe(viewLifecycleOwner) {
-            vacanciesAdapter.submitList(vacanciesList)
+        homeViewModel.vacancyList.observe(viewLifecycleOwner) {
+            binding.vacanciesText.text = "${it.size} вакансий"
+            vacanciesAdapter.submitList(it)
         }
+        setArrowBottom()
     }
 
     private fun showVacancyDetails(vacancyId: String) {
@@ -115,6 +118,50 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             fragment = vacancyFeatureApi.open(vacancyId = vacancyId),
             addToBackStack = true
         )
+    }
+
+    private fun setArrowBottom() {
+        binding.searchTextField.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            com.example.ui.R.drawable.ic_back_arrow,
+            0,
+            0,
+            0
+        )
+
+        binding.searchTextField.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+
+                    try {
+                        val iconWidth = binding.searchTextField.getCompoundDrawables()[0].bounds.width()*1.7
+                        val clickSpace = binding.searchTextField.left + event.x.toInt()
+                        if (clickSpace <= iconWidth) homeViewModel.backArrowClicked()
+                    } catch (e: Exception) {}
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun showVacanciesData(){
+        binding.searchTextField.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            com.example.ui.R.drawable.ic_search,
+            0,
+            0,
+            0
+        )
+
+        binding.moreVacanciesButton.visibility = View.VISIBLE
+        binding.offersRecyclerView.visibility = View.VISIBLE
+        binding.vacanciesText.textSize = 20.toFloat()
+        binding.sortBlock.visibility = View.GONE
+
+        homeViewModel.vacancyList.observe(viewLifecycleOwner) {
+            binding.moreVacanciesButton.text = "Еще ${it.size.minus(3)} вакансии"
+            binding.vacanciesText.text = "Вакансии для вас"
+            vacanciesAdapter.submitList(it.take(3))
+        }
     }
 
 }
