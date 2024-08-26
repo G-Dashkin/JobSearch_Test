@@ -95,11 +95,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             },
             itemFavoriteClick = { itemFavorite ->
                 homeViewModel.selectFavoriteIcon(vacancyId = itemFavorite)
-                lifecycleScope.launch {
-                    // вот это убрать...
-                    delay(200)
-                    parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
-                }
+                updateBottomNavBar()
             },
             context = requireContext()
         )
@@ -107,7 +103,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.vacanciesRecyclerView.adapter = vacanciesAdapter
         homeViewModel.vacancyList.observe(viewLifecycleOwner) {
             binding.moreVacanciesButton.text = "${resources.getString(com.example.ui.R.string.more)} " +
-                                               "${it.size.minus(3)} ${com.example.ui.R.string.vacancies}"
+           "${it.size.minus(3)} ${resources.getString(com.example.ui.R.string.vacancies)}"
             vacanciesAdapter.submitList(it.take(3))
         }
     }
@@ -184,6 +180,19 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.circularProgressIndicator.visibility = View.VISIBLE
         binding.moreVacanciesButton.visibility = View.GONE
         binding.vacanciesText.visibility = View.GONE
+    }
+
+    private fun updateBottomNavBar() {
+        // вот это убрать...
+        // вот такой рещение
+        // можно засунуть в одну функцию
+//                    while (projectsViewModel.projectsList.value?.find { it.name == projectName } == null){
+//                        delay(100)
+//                    }
+        lifecycleScope.launch {
+            delay(100)
+            parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
+        }
     }
 
 }

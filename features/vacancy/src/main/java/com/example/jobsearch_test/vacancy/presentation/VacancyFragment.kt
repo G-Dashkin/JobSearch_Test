@@ -137,13 +137,9 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
     }
 
     private fun changeIsFavoriteIcon(vacancy: Vacancy) {
+        updateBottomNavBar()
         var isFavorite = vacancy.isFavorite
         lifecycleScope.launch {
-            vacancyViewModel.selectFavoriteIcon(vacancyId = vacancy.id)
-            // вот это убрать...
-            delay(200)
-
-            parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
             if (isFavorite) {
                 binding.favoriteIcon.setImageResource(com.example.ui.R.drawable.ic_favorite)
                 isFavorite = false
@@ -164,6 +160,19 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         val params = binding.questionsList.layoutParams
         params.height = totalHeight + (binding.questionsList.dividerHeight * (binding.questionsList.adapter.count - 1))
         binding.questionsList.layoutParams = params
+    }
+
+    private fun updateBottomNavBar() {
+        // вот это убрать...
+        // вот такой рещение
+        // можно засунуть в одну функцию
+//                    while (projectsViewModel.projectsList.value?.find { it.name == projectName } == null){
+//                        delay(100)
+//                    }
+        lifecycleScope.launch {
+            delay(100)
+            parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
+        }
     }
 
     private fun showBackFragment(){

@@ -71,11 +71,7 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
         vacanciesAdapter = VacanciesAdapter(
             itemFavoriteClick = { itemFavorite ->
                 favoritesViewModel.selectFavoriteIcon(vacancyId = itemFavorite)
-                lifecycleScope.launch {
-                    // вот это убрать...
-                    delay(200)
-                    parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
-                }
+                updateBottomNavBar()
             },
             context = requireContext()
         )
@@ -83,6 +79,19 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
         binding.vacanciesRecyclerView.adapter = vacanciesAdapter
         favoritesViewModel.state.observe(viewLifecycleOwner) {
             vacanciesAdapter.submitList(vacanciesList)
+        }
+    }
+
+    private fun updateBottomNavBar() {
+        // вот это убрать...
+        // вот такой рещение
+        // можно засунуть в одну функцию
+//                    while (projectsViewModel.projectsList.value?.find { it.name == projectName } == null){
+//                        delay(100)
+//                    }
+        lifecycleScope.launch {
+            delay(100)
+            parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())
         }
     }
 }
