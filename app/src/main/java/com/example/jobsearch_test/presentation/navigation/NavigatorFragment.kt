@@ -23,6 +23,8 @@ import com.example.jobsearch_test.domain.usecases.GetFavoritesCountUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private val ENTRANCE_FRAGMENTS = setOf("Entrance1Fragment", "Entrance2Fragment")
+
 class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder {
 
     private lateinit var binding: FragmentNavigatorBinding
@@ -89,18 +91,19 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
 
     private fun setBottomNavigation() {
         lifecycleScope.launch {
-
             binding.bottomNavigation.setOnItemSelectedListener { item->
-                when(item.itemId) {
-                    R.id.nav_search -> {
-                        router.navigateTo(fragment = homeFeatureApi.open(), addToBackStack = true)
+                if (childFragmentManager.fragments.first().javaClass.simpleName !in ENTRANCE_FRAGMENTS){
+                    when(item.itemId) {
+                        R.id.nav_search -> {
+                            router.navigateTo(fragment = homeFeatureApi.open(), addToBackStack = true)
+                        }
+                        R.id.nav_favorites -> {
+                            router.navigateTo(fragment = favoritesFeatureApi.open(), addToBackStack = true)
+                        }
+                        R.id.nav_responses -> showBlankScreen()
+                        R.id.nav_messages -> showBlankScreen()
+                        R.id.nav_profile -> showBlankScreen()
                     }
-                    R.id.nav_favorites -> {
-                        router.navigateTo(fragment = favoritesFeatureApi.open(), addToBackStack = true)
-                    }
-                    R.id.nav_responses -> showBlankScreen()
-                    R.id.nav_messages -> showBlankScreen()
-                    R.id.nav_profile -> showBlankScreen()
                 }
                 true
             }
