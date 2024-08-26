@@ -1,6 +1,5 @@
 package com.example.jobsearch_test.data.storage
 
-import android.util.Log
 import com.example.jobsearch_test.data.database.dao.FavoritesDao
 import com.example.jobsearch_test.data.database.entities.FavoritesEntity
 import com.example.jobsearch_test.data_api.storage.VacanciesStorage

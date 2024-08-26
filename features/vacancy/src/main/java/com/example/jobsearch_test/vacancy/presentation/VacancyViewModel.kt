@@ -1,6 +1,5 @@
 package com.example.jobsearch_test.vacancy.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +12,6 @@ import com.example.jobsearch_test.vacancy.domain.usecases.SelectFavoriteVacancie
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 sealed class VacancyScreen {

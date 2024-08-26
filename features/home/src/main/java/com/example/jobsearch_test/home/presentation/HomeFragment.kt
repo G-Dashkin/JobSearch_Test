@@ -1,7 +1,6 @@
 package com.example.jobsearch_test.home.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.os.bundleOf
@@ -17,9 +16,6 @@ import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.home.di.DaggerHomeComponent
 import com.example.jobsearch_test.home.di.HomeFeatureDepsProvider
-import com.example.jobsearch_test.models.JobData
-import com.example.jobsearch_test.models.Offer
-import com.example.jobsearch_test.models.Vacancy
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -189,12 +185,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
 
     private fun updateBottomNavBar() {
-        // вот это убрать...
-        // вот такой рещение
-        // можно засунуть в одну функцию
-//                    while (projectsViewModel.projectsList.value?.find { it.name == projectName } == null){
-//                        delay(100)
-//                    }
         lifecycleScope.launch {
             delay(100)
             parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())

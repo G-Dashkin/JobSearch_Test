@@ -3,11 +3,9 @@ package com.example.jobsearch_test.vacancy.presentation
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
-import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.jobsearch_test.api.HomeFeatureApi
 import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
 import com.example.jobsearch_test.core.navigation.Router
-import com.example.jobsearch_test.models.Vacancy
 import com.example.jobsearch_test.vacancy.di.DaggerVacancyComponent
 import com.example.jobsearch_test.vacancy.di.VacancyFeatureDepsProvider
 import com.example.vacancy.R
@@ -160,12 +157,6 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
     }
 
     private fun updateBottomNavBar() {
-        // вот это убрать...
-        // вот такой рещение
-        // можно засунуть в одну функцию
-//                    while (projectsViewModel.projectsList.value?.find { it.name == projectName } == null){
-//                        delay(100)
-//                    }
         lifecycleScope.launch {
             delay(100)
             parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())

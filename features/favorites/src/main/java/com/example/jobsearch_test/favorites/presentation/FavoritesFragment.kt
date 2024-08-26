@@ -1,7 +1,6 @@
 package com.example.jobsearch_test.favorites.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favorites.R
 import com.example.favorites.databinding.FragmentFavoritesBinding
 import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
-import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.core.utils.countNoun
 import com.example.jobsearch_test.favorites.di.DaggerFavoritesComponent
 import com.example.jobsearch_test.favorites.di.FavoritesFeatureDepsProvider
@@ -97,12 +95,6 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
     }
 
     private fun updateBottomNavBar() {
-        // вот это убрать...
-        // вот такой рещение
-        // можно засунуть в одну функцию
-//                    while (projectsViewModel.projectsList.value?.find { it.name == projectName } == null){
-//                        delay(100)
-//                    }
         lifecycleScope.launch {
             delay(100)
             parentFragmentManager.setFragmentResult(CALL_BOTTOM_MENU_LISTENER, bundleOf())

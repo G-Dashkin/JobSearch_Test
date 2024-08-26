@@ -2,13 +2,11 @@ package com.example.jobsearch_test.presentation.navigation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -52,9 +50,7 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
         binding = FragmentNavigatorBinding.inflate(layoutInflater)
         DaggerProvider.appComponent.inject(this)
         navigatorLifecycle.onCreate(this)
-//        router.navigateTo(fragment = entranceFeatureApi.openEntrance1())
-        router.navigateTo(fragment = homeFeatureApi.open())
-
+        router.navigateTo(fragment = entranceFeatureApi.openEntrance1())
     }
 
     override fun onCreateView(

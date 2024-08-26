@@ -1,13 +1,9 @@
 package com.example.jobsearch_test.data.retrofit
 
-import android.util.Log
 import com.example.jobsearch_test.data_api.network.JobDataNetwork
 import com.example.jobsearch_test.models.JobData
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

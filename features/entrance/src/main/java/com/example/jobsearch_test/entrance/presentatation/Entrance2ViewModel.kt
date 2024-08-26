@@ -1,6 +1,5 @@
 package com.example.jobsearch_test.entrance.presentatation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.example.jobsearch_test.core.utils.hasNoEmptyValues
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import javax.inject.Inject
 
 
 sealed class Entrance2Screen {

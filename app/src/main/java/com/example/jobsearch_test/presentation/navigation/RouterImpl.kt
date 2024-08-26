@@ -1,6 +1,5 @@
 package com.example.jobsearch_test.presentation.navigation
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.jobsearch_test.R

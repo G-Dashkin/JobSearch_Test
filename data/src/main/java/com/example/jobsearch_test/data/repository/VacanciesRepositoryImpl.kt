@@ -1,7 +1,5 @@
 package com.example.jobsearch_test.data.repository
 
-import android.content.Context
-import android.util.Log
 import com.example.jobsearch_test.data.mappers.toDomain
 import com.example.jobsearch_test.data_api.network.JobDataNetwork
 import com.example.jobsearch_test.data_api.repository.VacanciesRepository
@@ -9,10 +7,8 @@ import com.example.jobsearch_test.data_api.storage.VacanciesStorage
 import com.example.jobsearch_test.models.JobData
 import com.example.jobsearch_test.models.Offer
 import com.example.jobsearch_test.models.Vacancy
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

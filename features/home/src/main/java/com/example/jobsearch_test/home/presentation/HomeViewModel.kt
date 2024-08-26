@@ -1,6 +1,5 @@
 package com.example.jobsearch_test.home.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,6 @@ import com.example.jobsearch_test.home.domain.usecases.GetVacanciesUseCase
 import com.example.jobsearch_test.home.domain.usecases.SelectFavoriteVacanciesUseCase
 import com.example.jobsearch_test.models.Offer
 import com.example.jobsearch_test.models.Vacancy
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

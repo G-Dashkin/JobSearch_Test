@@ -1,16 +1,12 @@
 package com.example.jobsearch_test.vacancy.presentation
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.TextView
 import com.example.vacancy.R
-import com.example.vacancy.databinding.QuestionItemBinding
 
 class QuestionsListAdapter(private val context: Context, private val questions: List<String>) :
     ArrayAdapter<String>(context, 0, questions){

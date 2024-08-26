@@ -1,8 +1,8 @@
 package com.example.jobsearch_test.app
 
 import android.app.Application
-import com.example.jobsearch_test.di.DaggerAppComponent
 import com.example.jobsearch_test.di.AppModule
+import com.example.jobsearch_test.di.DaggerAppComponent
 import com.example.jobsearch_test.di.DaggerProvider
 import com.example.jobsearch_test.entrance.di.EntranceFeatureDepsProvider
 import com.example.jobsearch_test.favorites.di.FavoritesFeatureDepsProvider

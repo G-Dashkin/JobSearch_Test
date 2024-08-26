@@ -3,15 +3,12 @@ package com.example.jobsearch_test.entrance.presentatation
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.entrance.R
-import com.example.entrance.databinding.FragmentEntrance1Binding
 import com.example.entrance.databinding.FragmentEntrance2Binding
-import com.example.jobsearch_test.api.EntranceFeatureApi
 import com.example.jobsearch_test.api.HomeFeatureApi
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.entrance.di.DaggerEntranceComponent
