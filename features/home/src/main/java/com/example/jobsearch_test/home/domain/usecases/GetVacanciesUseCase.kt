@@ -9,6 +9,6 @@ class GetVacanciesUseCase @Inject constructor(
     private val repository: VacanciesRepository
 ): UseCaseWithoutParams<List<Vacancy>> {
     override suspend fun execute(): List<Vacancy> {
-        return repository.getAllVacancies()
+        return repository.getVacancies()
     }
 }

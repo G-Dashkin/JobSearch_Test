@@ -12,6 +12,7 @@ import com.example.jobsearch_test.models.Vacancy
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,9 +22,21 @@ class VacanciesRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): VacanciesRepository {
 
-    override suspend fun getAllVacancies(): List<Vacancy> {
+    private val vacanciesBuffer = ArrayList<Vacancy>()
+    private val offerBuffer = ArrayList<Offer>()
+
+    override suspend fun getVacancies(): List<Vacancy> {
         val favoritesVacancies = vacanciesStorage.getFavorites()
-        return getJobData().vacancies.map { vacancy ->
+
+        if (vacanciesBuffer.isEmpty()) {
+            val vacanciesList = getJobData().vacancies.map { vacancy ->
+                if (favoritesVacancies.contains(vacancy.id)) vacancy.toDomain(true)
+                else vacancy.toDomain()
+            }
+            vacanciesBuffer.addAll(vacanciesList)
+        }
+
+        return vacanciesBuffer.map { vacancy ->
             if (favoritesVacancies.contains(vacancy.id)) vacancy.toDomain(true)
             else vacancy.toDomain()
         }
@@ -35,8 +48,13 @@ class VacanciesRepositoryImpl @Inject constructor(
 
     override suspend fun getFavoritesVacancies(): List<Vacancy> {
         val favoritesVacancies = vacanciesStorage.getFavorites()
-        return getJobData().vacancies.filter { vacancy ->
-            Log.d("MyLog", vacancy.toString())
+        return if (vacanciesBuffer.isEmpty()) {
+            getJobData().vacancies.filter { vacancy ->
+                favoritesVacancies.contains(vacancy.id)
+            }.map { selectedVacancy ->
+                selectedVacancy.toDomain(true)
+            }
+        } else vacanciesBuffer.filter { vacancy ->
             favoritesVacancies.contains(vacancy.id)
         }.map { selectedVacancy ->
             selectedVacancy.toDomain(true)
@@ -45,12 +63,14 @@ class VacanciesRepositoryImpl @Inject constructor(
 
     override suspend fun getVacancy(vacancyId: String): Vacancy {
         val favoritesVacancies = vacanciesStorage.getFavorites()
-        val vacancy = getJobData().vacancies.filter { it.id == vacancyId }.first()
-        return if (favoritesVacancies.contains(vacancy.id)) vacancy.toDomain(true)
-        else vacancy
+        val vacancy = vacanciesBuffer.filter { it.id == vacancyId }.first()
+        return vacancy.toDomain(favoritesVacancies.contains(vacancy.id))
     }
 
-    override suspend fun getAllOffers(): List<Offer> = getJobData().offers
+    override suspend fun getOffers(): List<Offer> {
+        if (offerBuffer.isEmpty()) offerBuffer.addAll(getJobData().offers)
+        return offerBuffer
+    }
 
     private suspend fun getJobData(): JobData = withContext(dispatcher) {
         jobDataNetwork.getStats()

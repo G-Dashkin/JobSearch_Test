@@ -11,6 +11,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/favoritesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin60"
@@ -28,8 +29,28 @@
         android:textColor="@color/grey3"
         style="@style/Text1"/>
 
+    <ProgressBar
+        android:id="@+id/circularProgressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        android:maxWidth="@dimen/width72"
+        android:maxHeight="@dimen/height72"
+        android:minWidth="@dimen/width72"
+        android:minHeight="@dimen/height72"
+        app:indicatorSize="@dimen/size72"
+        app:layout_constraintBottom_toBottomOf="@+id/moreVacanciesButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vacanciesRecyclerView" />
+
+
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vacanciesRecyclerView"
+        android:id="@+id/favoritesVacanciesRecyclerView"
         android:layout_marginTop="@dimen/margin20"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

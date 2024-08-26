@@ -2,6 +2,7 @@ package com.example.jobsearch_test.presentation.navigation
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,8 +103,12 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
             }
             binding.bottomNavigation.setOnItemSelectedListener { item->
                 when(item.itemId) {
-                    R.id.nav_search -> router.navigateTo(fragment = homeFeatureApi.open())
-                    R.id.nav_favorites -> router.navigateTo(fragment = favoritesFeatureApi.open())
+                    R.id.nav_search -> {
+                        router.navigateTo(fragment = homeFeatureApi.open(), addToBackStack = true)
+                    }
+                    R.id.nav_favorites -> {
+                        router.navigateTo(fragment = favoritesFeatureApi.open(), addToBackStack = true)
+                    }
                     R.id.nav_responses -> showBlankScreen()
                     R.id.nav_messages -> showBlankScreen()
                     R.id.nav_profile -> showBlankScreen()

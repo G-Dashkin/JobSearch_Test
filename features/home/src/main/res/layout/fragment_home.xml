@@ -53,6 +53,19 @@
         android:layout_marginTop="@dimen/margin20"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/circularTopProgressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height120"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone"
+            android:maxWidth="@dimen/width72"
+            android:maxHeight="@dimen/height72"
+            android:minWidth="@dimen/width72"
+            android:minHeight="@dimen/height72"
+            app:indicatorSize="@dimen/size72"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/offersRecyclerView"
@@ -105,7 +118,7 @@
         android:orientation="vertical">
 
         <ProgressBar
-            android:id="@+id/circularProgressIndicator"
+            android:id="@+id/circularMainProgressIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

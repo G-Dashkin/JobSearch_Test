@@ -66,19 +66,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         setVacanciesAdapter()
     }
 
-    private fun setState() {
-        homeViewModel.state.observe(viewLifecycleOwner) {
-            when(it) {
-                HomeScreenState.Loading -> showLoadingIndicator()
-                is HomeScreenState.Loaded -> showVacanciesData()
-                is HomeScreenState.LoadedAllVacancies -> showMoreVacancies()
-                is HomeScreenState.VacancyDetails -> showVacancyDetails(vacancyId = it.vacancyId)
-                HomeScreenState.Empty -> {}
-                HomeScreenState.Nothing -> {}
-            }
-        }
-    }
-
     private fun setOffersAdapter() {
         homeViewModel.offerList.observe(viewLifecycleOwner) {
             offersAdapter = OffersAdapter(it)
@@ -103,7 +90,54 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.vacanciesRecyclerView.adapter = vacanciesAdapter
         homeViewModel.vacancyList.observe(viewLifecycleOwner) {
             binding.moreVacanciesButton.text = "${resources.getString(com.example.ui.R.string.more)} " +
-           "${it.size.minus(3)} ${resources.getString(com.example.ui.R.string.vacancies)}"
+                    "${it.size.minus(3)} ${resources.getString(com.example.ui.R.string.vacancies)}"
+            vacanciesAdapter.submitList(it.take(3))
+        }
+    }
+
+    private fun setState() {
+        homeViewModel.state.observe(viewLifecycleOwner) {
+            when(it) {
+                HomeScreenState.VacanciesLoading -> showMainLoadingIndicator()
+                HomeScreenState.VacanciesLoaded -> showVacanciesData()
+                HomeScreenState.OffersLoading -> showTopLoadingIndicator()
+                HomeScreenState.OfferLoaded ->  showOffersData()
+                HomeScreenState.LoadedAllVacancies -> showMoreVacancies()
+                is HomeScreenState.VacancyDetails -> showVacancyDetails(vacancyId = it.vacancyId)
+            }
+        }
+    }
+
+    private fun showMainLoadingIndicator() {
+        binding.circularMainProgressIndicator.visibility = View.VISIBLE
+        binding.offersRecyclerView.visibility = View.GONE
+        binding.moreVacanciesButton.visibility = View.GONE
+        binding.vacanciesText.visibility = View.GONE
+
+    }
+
+    private fun showTopLoadingIndicator() {
+        binding.circularTopProgressIndicator.visibility = View.VISIBLE
+    }
+
+    private fun showOffersData(){
+        binding.circularTopProgressIndicator.visibility = View.GONE
+        binding.offersRecyclerView.visibility = View.VISIBLE
+    }
+
+    private fun showVacanciesData(){
+        binding.circularMainProgressIndicator.visibility = View.GONE
+        binding.vacanciesText.visibility = View.VISIBLE
+        binding.searchTextField.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            com.example.ui.R.drawable.ic_search, 0, 0, 0)
+        binding.moreVacanciesButton.visibility = View.VISIBLE
+        binding.vacanciesText.textSize = 20.toFloat()
+        binding.sortBlock.visibility = View.GONE
+        homeViewModel.vacancyList.observe(viewLifecycleOwner) {
+            binding.moreVacanciesButton.text = "${resources.getString(com.example.ui.R.string.more)} " +
+                                               "${it.size.minus(3)} " +
+                                               "${resources.getString(com.example.ui.R.string.vacancies)}"
+            binding.vacanciesText.text = "${resources.getString(com.example.ui.R.string.vacancies_for_you)}"
             vacanciesAdapter.submitList(it.take(3))
         }
     }
@@ -120,12 +154,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         setArrowBottom()
     }
 
-    private fun showVacancyDetails(vacancyId: String) {
-        router.navigateTo(
-            fragment = vacancyFeatureApi.open(vacancyId = vacancyId),
-            addToBackStack = true
-        )
-    }
 
     private fun setArrowBottom() {
         binding.searchTextField.setCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -151,36 +179,14 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun showVacanciesData(){
-        binding.circularProgressIndicator.visibility = View.GONE
-        binding.vacanciesText.visibility = View.VISIBLE
-        binding.searchTextField.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            com.example.ui.R.drawable.ic_search,
-            0,
-            0,
-            0
+
+    private fun showVacancyDetails(vacancyId: String) {
+        router.navigateTo(
+            fragment = vacancyFeatureApi.open(vacancyId = vacancyId),
+            addToBackStack = true
         )
-
-        binding.moreVacanciesButton.visibility = View.VISIBLE
-        binding.offersRecyclerView.visibility = View.VISIBLE
-        binding.vacanciesText.textSize = 20.toFloat()
-        binding.sortBlock.visibility = View.GONE
-
-
-        homeViewModel.vacancyList.observe(viewLifecycleOwner) {
-            binding.moreVacanciesButton.text = "${resources.getString(com.example.ui.R.string.more)} " +
-                                               "${it.size.minus(3)} " +
-                                               "${resources.getString(com.example.ui.R.string.vacancies)}"
-            binding.vacanciesText.text = "${resources.getString(com.example.ui.R.string.vacancies_for_you)}"
-            vacanciesAdapter.submitList(it.take(3))
-        }
     }
 
-    private fun showLoadingIndicator() {
-        binding.circularProgressIndicator.visibility = View.VISIBLE
-        binding.moreVacanciesButton.visibility = View.GONE
-        binding.vacanciesText.visibility = View.GONE
-    }
 
     private fun updateBottomNavBar() {
         // вот это убрать...

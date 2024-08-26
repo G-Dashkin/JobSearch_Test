@@ -12,16 +12,17 @@ import com.example.jobsearch_test.home.domain.usecases.GetVacanciesUseCase
 import com.example.jobsearch_test.home.domain.usecases.SelectFavoriteVacanciesUseCase
 import com.example.jobsearch_test.models.Offer
 import com.example.jobsearch_test.models.Vacancy
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class HomeScreenState {
-    data object Nothing : HomeScreenState()
-    data object Loading : HomeScreenState()
-    data object Loaded : HomeScreenState()
-    data class LoadedAllVacancies(val vacancies: List<Vacancy>) : HomeScreenState()
+    data object VacanciesLoading : HomeScreenState()
+    data object VacanciesLoaded : HomeScreenState()
+    data object OffersLoading : HomeScreenState()
+    data object OfferLoaded : HomeScreenState()
+    data object LoadedAllVacancies : HomeScreenState()
     data class VacancyDetails(val vacancyId: String) : HomeScreenState()
-    data object Empty : HomeScreenState()
 }
 
 class HomeViewModel(
@@ -36,35 +37,31 @@ class HomeViewModel(
     private val _offerList = MutableLiveData<List<Offer>>()
     val offerList: LiveData<List<Offer>> = _offerList
 
-    private val _state = MutableLiveData<HomeScreenState>(HomeScreenState.Loading)
+    private val _state = MutableLiveData<HomeScreenState>(HomeScreenState.VacanciesLoading)
     val state: LiveData<HomeScreenState> = _state
 
     init {
-        loadVacanciesList()
+        loadData()
     }
 
-    private fun loadVacanciesList() {
+    private fun loadData() {
         viewModelScope.launch {
             _vacancyList.postValue(getVacanciesUseCase.execute())
+            _state.value = HomeScreenState.VacanciesLoaded
+            _state.value = HomeScreenState.OffersLoading
             _offerList.postValue(getOffersUseCase.execute())
-            if (vacancyList.value.isNullOrEmpty() && offerList.value.isNullOrEmpty()) {
-                _state.value = HomeScreenState.Empty
-            } else {
-                _state.value = HomeScreenState.Loaded
-            }
+            _state.value = HomeScreenState.OfferLoaded
         }
     }
 
+
     fun moreVacanciesButtonClicked() {
-        viewModelScope.launch {
-            _state.value = HomeScreenState.LoadedAllVacancies(vacancies = getVacanciesUseCase.execute())
-        }
+        _state.value = HomeScreenState.LoadedAllVacancies
     }
 
     fun itemVacancyClicked(vacancyId: String) {
         viewModelScope.launch {
             _state.value = HomeScreenState.VacancyDetails(vacancyId = vacancyId)
-            _state.value = HomeScreenState.Nothing
         }
     }
 
@@ -77,7 +74,7 @@ class HomeViewModel(
     }
 
     fun backArrowClicked() {
-        _state.value = HomeScreenState.Loaded
+        _state.value = HomeScreenState.VacanciesLoaded
     }
 
 }

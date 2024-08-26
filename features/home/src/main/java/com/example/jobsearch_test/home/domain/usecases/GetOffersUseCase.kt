@@ -10,6 +10,6 @@ class GetOffersUseCase @Inject constructor(
     private val repository: VacanciesRepository
 ): UseCaseWithoutParams<List<Offer>> {
     override suspend fun execute(): List<Offer> {
-        return repository.getAllOffers()
+        return repository.getOffers()
     }
 }

@@ -56,13 +56,8 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
     private fun setState() {
         favoritesViewModel.state.observe(viewLifecycleOwner) {
             when(it) {
-                FavoritesScreenState.Loading -> {}
-                is FavoritesScreenState.Loaded -> {
-                    binding.vacanciesCount.text = "${it.vacancies.size} ${
-                        resources.getString(countNoun(it.vacancies.size))
-                    }"
-                    setVacanciesAdapter(vacanciesList = it.vacancies)
-                }
+                FavoritesScreenState.Loading -> showMainLoadingIndicator()
+                is FavoritesScreenState.Loaded -> showVacanciesData(it.vacancies)
             }
         }
     }
@@ -75,11 +70,30 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
             },
             context = requireContext()
         )
-        binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.vacanciesRecyclerView.adapter = vacanciesAdapter
+        binding.favoritesVacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.favoritesVacanciesRecyclerView.adapter = vacanciesAdapter
         favoritesViewModel.state.observe(viewLifecycleOwner) {
             vacanciesAdapter.submitList(vacanciesList)
         }
+    }
+
+
+    private fun showVacanciesData(vacanciesList: List<Vacancy>){
+        binding.circularProgressIndicator.visibility = View.GONE
+        binding.favoritesText.visibility = View.VISIBLE
+        binding.vacanciesCount.visibility = View.VISIBLE
+        binding.favoritesVacanciesRecyclerView.visibility = View.VISIBLE
+        binding.vacanciesCount.text = "${vacanciesList.size} ${
+            resources.getString(countNoun(vacanciesList.size))
+        }"
+        setVacanciesAdapter(vacanciesList = vacanciesList)
+    }
+
+    private fun showMainLoadingIndicator() {
+        binding.circularProgressIndicator.visibility = View.VISIBLE
+        binding.favoritesText.visibility = View.GONE
+        binding.vacanciesCount.visibility = View.GONE
+        binding.favoritesVacanciesRecyclerView.visibility = View.GONE
     }
 
     private fun updateBottomNavBar() {

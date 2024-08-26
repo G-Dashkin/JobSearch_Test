@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.jobsearch_test.api.HomeFeatureApi
 import com.example.jobsearch_test.core.contracts.CALL_BOTTOM_MENU_LISTENER
 import com.example.jobsearch_test.core.navigation.Router
 import com.example.jobsearch_test.models.Vacancy
@@ -48,6 +49,9 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
     @Inject
     lateinit var vmFactoryAssisted: VacancyViewModelFactoryAssisted
 
+    @Inject
+    lateinit var homeFeatureApi: HomeFeatureApi
+
     private val vacancyViewModel by viewModels<VacancyViewModel> {
         vmFactoryAssisted.create(arguments?.getString(VACANCY_ID_EXTRA_PARAM))
     }
@@ -75,8 +79,9 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
             when(it) {
                 VacancyScreen.Loading -> showLoadingIndicator()
                 is VacancyScreen.Loaded -> setVacancyData()
-                VacancyScreen.Back -> showBackFragment()
+                VacancyScreen.Back -> backToHomeFragment()
                 is VacancyScreen.Apply -> showApplyDialog(vacancyTitle = it.vacancyTitle)
+                is VacancyScreen.ChangeIsFavoriteIcon -> changeIsFavoriteIcon(it.isFavorite)
             }
         }
     }
@@ -108,7 +113,7 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
             binding.companyAddress.text = "${vacancy.address.town}, ${vacancy.address.street}, ${vacancy.address.house}"
             binding.description.text = vacancy.description
             binding.responsibilities.text = vacancy.responsibilities
-            binding.favoriteIcon.setOnClickListener { changeIsFavoriteIcon(vacancy) }
+            binding.favoriteIcon.setOnClickListener { vacancyViewModel.favoriteIconClicked(vacancy.id) }
             binding.applyButton.setOnClickListener { vacancyViewModel.applyButtonClicked(vacancy.title) }
             binding.questionsList.adapter = QuestionsListAdapter(requireContext(), vacancy.questions)
             setListViewSettings()
@@ -136,18 +141,10 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         }
     }
 
-    private fun changeIsFavoriteIcon(vacancy: Vacancy) {
+    private fun changeIsFavoriteIcon(isFavorite: Boolean) {
+        if (isFavorite) binding.favoriteIcon.setImageResource(com.example.ui.R.drawable.ic_favorites_select)
+        else binding.favoriteIcon.setImageResource(com.example.ui.R.drawable.ic_favorite)
         updateBottomNavBar()
-        var isFavorite = vacancy.isFavorite
-        lifecycleScope.launch {
-            if (isFavorite) {
-                binding.favoriteIcon.setImageResource(com.example.ui.R.drawable.ic_favorite)
-                isFavorite = false
-            } else {
-                binding.favoriteIcon.setImageResource(com.example.ui.R.drawable.ic_favorites_select)
-                isFavorite = true
-            }
-        }
     }
     private fun setListViewSettings(){
         var totalHeight = 0
@@ -175,8 +172,8 @@ class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
         }
     }
 
-    private fun showBackFragment(){
-        router.back()
+    private fun backToHomeFragment(){
+        router.navigateTo(homeFeatureApi.open())
     }
 
 
