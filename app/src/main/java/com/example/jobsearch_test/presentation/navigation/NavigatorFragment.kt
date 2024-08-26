@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -92,15 +93,7 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
 
     private fun setBottomNavigation() {
         lifecycleScope.launch {
-            binding.bottomNavigation.getOrCreateBadge(R.id.nav_favorites).apply {
-                this.backgroundColor = ContextCompat.getColor(requireContext(), com.example.ui.R.color.red)
-                this.badgeTextColor = ContextCompat.getColor(requireContext(), com.example.ui.R.color.white)
-                this.maxCharacterCount = 3
-                this.verticalOffset = 25
-                this.horizontalOffset = 15
 
-                setBadgeCount(getFavoritesCountUseCase.execute())
-            }
             binding.bottomNavigation.setOnItemSelectedListener { item->
                 when(item.itemId) {
                     R.id.nav_search -> {
@@ -115,6 +108,16 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
                 }
                 true
             }
+
+            binding.bottomNavigation.getOrCreateBadge(R.id.nav_favorites).apply {
+                this.isVisible = false
+                this.backgroundColor = ContextCompat.getColor(requireContext(), com.example.ui.R.color.red)
+                this.badgeTextColor = ContextCompat.getColor(requireContext(), com.example.ui.R.color.white)
+                this.maxCharacterCount = 3
+                this.verticalOffset = 25
+                this.horizontalOffset = 15
+                setBadgeCount(getFavoritesCountUseCase.execute())
+            }
         }
     }
 
@@ -126,13 +129,14 @@ class NavigatorFragment : Fragment(R.layout.fragment_navigator), NavigatorHolder
 
     private fun setBadgeCount(count: Int) {
         val menuItemId = R.id.nav_favorites
-        val badge = binding.bottomNavigation.getBadge(menuItemId)
-        if (badge != null) {
-            if (count > 0) {
-                badge.isVisible = true
-                badge.number = count
-            } else {
-                badge.isVisible = false
+        binding.bottomNavigation.getBadge(menuItemId).apply {
+            if (this != null) {
+                if (count > 0) {
+                    this.isVisible = true
+                    this.number = count
+                } else {
+                    this.isVisible = false
+                }
             }
         }
     }
